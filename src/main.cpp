@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
       if (event.type == sf::Event::Closed) {
         window.close();
       } else if (event.type == sf::Event::Resized) {
-        LOG(INFO) << "Window resized to (" << event.size.width << ", "
-                  << event.size.height << ")";
+        // LOG(INFO) << "Window resized to (" << event.size.width << ", "
+        //           << event.size.height << ")";
         chessboard.resize(event.size.width, event.size.height);
       }
     }
