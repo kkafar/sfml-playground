@@ -1,3 +1,6 @@
+#ifndef __CHESSBOARD_HPP__
+#define __CHESSBOARD_HPP__
+
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
@@ -62,3 +65,5 @@ protected:
     }
   }
 };
+
+#endif // !__CHESSBOARD_HPP__
