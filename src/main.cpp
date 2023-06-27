@@ -1,9 +1,11 @@
 #include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/Color.hpp"
+#include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Window/Event.hpp"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <glog/logging.h>
+#include "chessboard.hpp"
 
 void initLogging(const char *argv0) {
   fLB::FLAGS_logtostdout = true;
@@ -14,9 +16,8 @@ int main (int argc, char *argv[]) {
   initLogging(argv[0]);
   LOG(INFO) << "Running application";
 
-  sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
-  sf::CircleShape circle_shape(100.f);
-  circle_shape.setFillColor(sf::Color::Green);
+  sf::RenderWindow window(sf::VideoMode(640, 640), "SFML works!");
+  Chessboard chessboard(80, 80);
 
   while (window.isOpen()) {
     sf::Event event;
@@ -27,7 +28,7 @@ int main (int argc, char *argv[]) {
     }
 
     window.clear(sf::Color::Black);
-    window.draw(circle_shape);
+    window.draw(chessboard);
     window.display();
   }
 
