@@ -42,7 +42,7 @@ public:
     sf::Uint32 tile_width_px = m_width_px / WIDTH;
     sf::Uint32 tile_height_px = m_height_px / HEIGHT;
 
-    LOG(INFO) << "New tile size is (" << tile_width_px << ", " << tile_height_px << ")";
+    // LOG(INFO) << "New tile size is (" << tile_width_px << ", " << tile_height_px << ")";
 
     for (sf::Uint32 i = 0; i < HEIGHT; ++i) {
       for (sf::Uint32 j = 0; j < WIDTH; ++j) {
