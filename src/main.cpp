@@ -14,6 +14,7 @@
 
 constexpr sf::Uint32 WINDOW_WIDTH = 1024;
 constexpr sf::Uint32 WINDOW_HEIGHT = 1024;
+constexpr uint FPS_LIMIT = 60;
 
 void initLogging(const char *argv0) {
   fLB::FLAGS_logtostdout = true;
@@ -30,7 +31,7 @@ int main(int argc, char *argv[]) {
 
   sf::VideoMode vm(WINDOW_WIDTH, WINDOW_HEIGHT);
   sf::RenderWindow window(vm, "Simple Chess");
-  window.setFramerateLimit(60);
+  window.setFramerateLimit(FPS_LIMIT);
 
   const TextureStore texture_store;
   Chessboard chessboard(vm.width, vm.height, texture_store);
@@ -42,7 +43,8 @@ int main(int argc, char *argv[]) {
         window.close();
       } else if (event.type == sf::Event::Resized) {
         chessboard.resize(event.size.width, event.size.height);
-        window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+        window.setView(
+            sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
       }
     }
 
