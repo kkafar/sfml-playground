@@ -4,6 +4,7 @@
 #include "PieceKind.hpp"
 #include "PlayerKind.hpp"
 #include "PlayerPieces.hpp"
+#include "Resizable.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
@@ -15,7 +16,7 @@
 #include <array>
 #include <glog/logging.h>
 
-class Chessboard : public sf::Drawable {
+class Chessboard : public sf::Drawable, public Resizable {
 public:
   constexpr static sf::Uint32 WIDTH = 8;
   constexpr static sf::Uint32 HEIGHT = 8;

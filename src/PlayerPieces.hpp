@@ -3,6 +3,7 @@
 
 #include "PieceKind.hpp"
 #include "PlayerKind.hpp"
+#include "Resizable.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
@@ -11,7 +12,7 @@
 #include "TextureStore.hpp"
 #include <array>
 
-class PlayerPieces : public sf::Drawable {
+class PlayerPieces : public sf::Drawable, public Resizable {
 public:
   constexpr static sf::Uint32 PAWN_COUNT = 8;
   constexpr static sf::Uint32 BISHOP_COUNT = 2;
