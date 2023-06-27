@@ -1,12 +1,15 @@
 #ifndef __CHESSBOARD_HPP__
 #define __CHESSBOARD_HPP__
 
+#include "PieceKind.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
+#include "SFML/Graphics/Sprite.hpp"
 #include "SFML/System/Vector2.hpp"
+#include "TextureStore.hpp"
 #include <array>
 #include <glog/logging.h>
 
@@ -15,11 +18,7 @@ public:
   constexpr static sf::Uint32 WIDTH = 8;
   constexpr static sf::Uint32 HEIGHT = 8;
 
-  std::array<std::array<sf::RectangleShape, WIDTH>, HEIGHT> m_fields;
-  sf::Uint32 m_width_px;
-  sf::Uint32 m_height_px;
-
-  Chessboard(const sf::Uint32 width_px, const sf::Uint32 height_px)
+  Chessboard(const sf::Uint32 width_px, const sf::Uint32 height_px, const TextureStore& texture_store)
       : m_width_px(width_px), m_height_px(height_px) {
     LOG(INFO) << "Chessboard ctor";
 
@@ -36,6 +35,8 @@ public:
         field.setSize(sf::Vector2f(tile_width_px, tile_height_px));
       }
     }
+
+    m_pawn = sf::Sprite(texture_store.textureForPieceKind(PieceKind::Pawn));
   }
 
   void resize(const sf::Uint32 width_px, const sf::Uint32 height_px) {
@@ -63,7 +64,16 @@ protected:
         target.draw(field, states);
       }
     }
+
+    target.draw(m_pawn);
   }
+private:
+
+  std::array<std::array<sf::RectangleShape, WIDTH>, HEIGHT> m_fields;
+  sf::Sprite m_pawn;
+
+  sf::Uint32 m_width_px;
+  sf::Uint32 m_height_px;
 };
 
 #endif // !__CHESSBOARD_HPP__

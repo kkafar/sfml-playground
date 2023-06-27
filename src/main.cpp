@@ -5,6 +5,7 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/VideoMode.hpp"
+#include "TextureStore.hpp"
 #include <SFML/Graphics.hpp>
 #include <glog/logging.h>
 #include <iostream>
@@ -27,7 +28,9 @@ int main(int argc, char *argv[]) {
 
   sf::VideoMode vm(WINDOW_WIDTH, WINDOW_HEIGHT);
   sf::RenderWindow window(vm, "Simple Chess");
-  Chessboard chessboard(vm.width, vm.height);
+
+  const TextureStore texture_store;
+  Chessboard chessboard(vm.width, vm.height, texture_store);
 
   while (window.isOpen()) {
     sf::Event event;
