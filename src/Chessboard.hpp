@@ -2,6 +2,8 @@
 #define __CHESSBOARD_HPP__
 
 #include "PieceKind.hpp"
+#include "PlayerKind.hpp"
+#include "PlayerPieces.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
@@ -18,8 +20,11 @@ public:
   constexpr static sf::Uint32 WIDTH = 8;
   constexpr static sf::Uint32 HEIGHT = 8;
 
-  Chessboard(const sf::Uint32 width_px, const sf::Uint32 height_px, const TextureStore& texture_store)
-      : m_width_px(width_px), m_height_px(height_px) {
+  Chessboard(const sf::Uint32 width_px, const sf::Uint32 height_px,
+             const TextureStore &texture_store)
+      : m_width_px(width_px), m_height_px(height_px),
+        m_player_white(PlayerKind::White, width_px / WIDTH, height_px / HEIGHT, texture_store),
+        m_player_black(PlayerKind::Black, width_px / WIDTH, height_px / HEIGHT, texture_store) {
     LOG(INFO) << "Chessboard ctor";
 
     sf::Uint32 tile_width_px = width_px / WIDTH;
@@ -36,7 +41,13 @@ public:
       }
     }
 
-    m_pawn = sf::Sprite(texture_store.textureForPieceKind(PieceKind::Pawn));
+    // m_pawn = sf::Sprite(texture_store.textureForPieceKind(PieceKind::Pawn));
+    // sf::Vector2u texture_size = m_pawn.getTexture()->getSize();
+    // float scale_x = static_cast<float>(tile_width_px) / texture_size.x;
+    // float scale_y = static_cast<float>(tile_height_px) / texture_size.y;
+    //
+    // m_pawn.setPosition(0, 0);
+    // m_pawn.setScale(scale_x, scale_y);
   }
 
   void resize(const sf::Uint32 width_px, const sf::Uint32 height_px) {
@@ -46,7 +57,8 @@ public:
     sf::Uint32 tile_width_px = m_width_px / WIDTH;
     sf::Uint32 tile_height_px = m_height_px / HEIGHT;
 
-    // LOG(INFO) << "New tile size is (" << tile_width_px << ", " << tile_height_px << ")";
+    // LOG(INFO) << "New tile size is (" << tile_width_px << ", " <<
+    // tile_height_px << ")";
 
     for (sf::Uint32 i = 0; i < HEIGHT; ++i) {
       for (sf::Uint32 j = 0; j < WIDTH; ++j) {
@@ -65,15 +77,18 @@ protected:
       }
     }
 
-    target.draw(m_pawn);
+    target.draw(m_player_white);
+    target.draw(m_player_black);
   }
-private:
 
+private:
   std::array<std::array<sf::RectangleShape, WIDTH>, HEIGHT> m_fields;
-  sf::Sprite m_pawn;
 
   sf::Uint32 m_width_px;
   sf::Uint32 m_height_px;
+
+  PlayerPieces m_player_white;
+  PlayerPieces m_player_black;
 };
 
 #endif // !__CHESSBOARD_HPP__

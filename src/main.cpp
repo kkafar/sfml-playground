@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
 
   sf::VideoMode vm(WINDOW_WIDTH, WINDOW_HEIGHT);
   sf::RenderWindow window(vm, "Simple Chess");
+  window.setFramerateLimit(60);
 
   const TextureStore texture_store;
   Chessboard chessboard(vm.width, vm.height, texture_store);
