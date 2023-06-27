@@ -1,10 +1,10 @@
+#include "Chessboard.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/VideoMode.hpp"
-#include "chessboard.hpp"
 #include <SFML/Graphics.hpp>
 #include <glog/logging.h>
 #include <iostream>
@@ -35,7 +35,8 @@ int main(int argc, char *argv[]) {
       if (event.type == sf::Event::Closed) {
         window.close();
       } else if (event.type == sf::Event::Resized) {
-        LOG(INFO) << "Window resized to (" << event.size.width << ", " << event.size.height << ")";
+        LOG(INFO) << "Window resized to (" << event.size.width << ", "
+                  << event.size.height << ")";
         chessboard.resize(event.size.width, event.size.height);
       }
     }
