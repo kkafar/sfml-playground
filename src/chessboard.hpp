@@ -23,9 +23,6 @@ public:
         const sf::Color tile_color =
             (i + j) % 2 == 0 ? sf::Color::White : sf::Color::Black;
         field.setFillColor(tile_color);
-        // field.setOutlineColor(sf::Color::Black);
-        LOG(INFO) << "Tile (" << i << ", " << j << ") has position ("
-                  << j * tile_width_px << ", " << i * tile_height_px << ") with color " << ((i + j) % 2 == 0 ? "White" : "Black");
         field.setPosition(j * tile_width_px, i * tile_height_px);
         field.setSize(sf::Vector2f(tile_width_px, tile_height_px));
       }

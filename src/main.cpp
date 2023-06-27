@@ -1,23 +1,33 @@
+#include "SFML/Config.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Window/Event.hpp"
-#include <iostream>
+#include "SFML/Window/VideoMode.hpp"
+#include "chessboard.hpp"
 #include <SFML/Graphics.hpp>
 #include <glog/logging.h>
-#include "chessboard.hpp"
+#include <iostream>
+
+constexpr sf::Uint32 WINDOW_WIDTH = 1024;
+constexpr sf::Uint32 WINDOW_HEIGHT = 1024;
 
 void initLogging(const char *argv0) {
   fLB::FLAGS_logtostdout = true;
   google::InitGoogleLogging(argv0);
 }
 
-int main (int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
   initLogging(argv[0]);
   LOG(INFO) << "Running application";
 
-  sf::RenderWindow window(sf::VideoMode(640, 640), "SFML works!");
-  Chessboard chessboard(80, 80);
+  const sf::VideoMode desktop_vm = sf::VideoMode::getDesktopMode();
+  LOG(INFO) << "Desktop VideoMode: (" << desktop_vm.width << ", "
+            << desktop_vm.height << ", " << desktop_vm.bitsPerPixel << ")";
+
+  sf::VideoMode vm(WINDOW_WIDTH, WINDOW_HEIGHT);
+  sf::RenderWindow window(vm, "SFML works!");
+  Chessboard chessboard(vm.width / Chessboard::WIDTH, vm.height / Chessboard::HEIGHT);
 
   while (window.isOpen()) {
     sf::Event event;
