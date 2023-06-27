@@ -40,25 +40,18 @@ public:
         field.setSize(sf::Vector2f(tile_width_px, tile_height_px));
       }
     }
-
-    // m_pawn = sf::Sprite(texture_store.textureForPieceKind(PieceKind::Pawn));
-    // sf::Vector2u texture_size = m_pawn.getTexture()->getSize();
-    // float scale_x = static_cast<float>(tile_width_px) / texture_size.x;
-    // float scale_y = static_cast<float>(tile_height_px) / texture_size.y;
-    //
-    // m_pawn.setPosition(0, 0);
-    // m_pawn.setScale(scale_x, scale_y);
   }
 
   void resize(const sf::Uint32 width_px, const sf::Uint32 height_px) {
+    if (m_width_px == width_px && m_height_px == height_px) {
+      return;
+    }
+
     m_width_px = width_px;
     m_height_px = height_px;
 
     sf::Uint32 tile_width_px = m_width_px / WIDTH;
     sf::Uint32 tile_height_px = m_height_px / HEIGHT;
-
-    // LOG(INFO) << "New tile size is (" << tile_width_px << ", " <<
-    // tile_height_px << ")";
 
     for (sf::Uint32 i = 0; i < HEIGHT; ++i) {
       for (sf::Uint32 j = 0; j < WIDTH; ++j) {
