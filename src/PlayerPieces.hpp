@@ -52,6 +52,10 @@ public:
     setInitialSpritePositions(tile_width_px, tile_height_px);
   }
 
+  void resize(const sf::Uint32 width_px, const sf::Uint32 height_px) {
+    setInitialSpritePositions(width_px / 8, height_px / 8);
+  }
+
 protected:
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const {
     for (const auto &pawn : m_pawns) {

@@ -2,7 +2,9 @@
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/Color.hpp"
+#include "SFML/Graphics/Rect.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
+#include "SFML/Graphics/View.hpp"
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/VideoMode.hpp"
 #include "TextureStore.hpp"
@@ -39,9 +41,8 @@ int main(int argc, char *argv[]) {
       if (event.type == sf::Event::Closed) {
         window.close();
       } else if (event.type == sf::Event::Resized) {
-        // LOG(INFO) << "Window resized to (" << event.size.width << ", "
-        //           << event.size.height << ")";
         chessboard.resize(event.size.width, event.size.height);
+        window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
       }
     }
 
