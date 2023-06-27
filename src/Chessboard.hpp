@@ -60,6 +60,9 @@ public:
         field.setPosition(j * tile_width_px, i * tile_height_px);
       }
     }
+
+    m_player_black.resize(width_px, height_px);
+    m_player_white.resize(width_px, height_px);
   }
 
 protected:
