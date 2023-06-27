@@ -1,4 +1,5 @@
 #include "SFML/Graphics/CircleShape.hpp"
+#include "SFML/Graphics/Color.hpp"
 #include "SFML/Window/Event.hpp"
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -16,7 +17,7 @@ int main (int argc, char *argv[]) {
       }
     }
 
-    window.clear();
+    window.clear(sf::Color::Black);
     window.draw(circle_shape);
     window.display();
   }
