@@ -26,14 +26,17 @@ int main(int argc, char *argv[]) {
             << desktop_vm.height << ", " << desktop_vm.bitsPerPixel << ")";
 
   sf::VideoMode vm(WINDOW_WIDTH, WINDOW_HEIGHT);
-  sf::RenderWindow window(vm, "SFML works!");
-  Chessboard chessboard(vm.width / Chessboard::WIDTH, vm.height / Chessboard::HEIGHT);
+  sf::RenderWindow window(vm, "Simple Chess");
+  Chessboard chessboard(vm.width, vm.height);
 
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         window.close();
+      } else if (event.type == sf::Event::Resized) {
+        LOG(INFO) << "Window resized to (" << event.size.width << ", " << event.size.height << ")";
+        chessboard.resize(event.size.width, event.size.height);
       }
     }
 
