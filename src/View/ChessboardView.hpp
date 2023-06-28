@@ -1,10 +1,8 @@
 #ifndef __CHESSBOARD_VIEW_HPP__
 #define __CHESSBOARD_VIEW_HPP__
 
-#include <Model/PieceKind.hpp>
 #include "Model/PlayerKind.hpp"
 #include "PlayerPieces.hpp"
-#include "View/Interfaces/Resizable.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
@@ -12,7 +10,9 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/System/Vector2.hpp"
+#include "View/Resizable.hpp"
 #include <Data/TextureStore.hpp>
+#include <Model/PieceKind.hpp>
 #include <array>
 #include <glog/logging.h>
 
@@ -22,9 +22,13 @@ public:
   constexpr static sf::Uint32 HEIGHT = 8;
 
   ChessboardView(const sf::Uint32 width_px, const sf::Uint32 height_px,
-             const TextureStore &texture_store);
+                 const TextureStore &texture_store);
 
   void resize(const sf::Uint32 width_px, const sf::Uint32 height_px);
+
+  [[nodiscard]] sf::Vector2u getSize() const;
+
+  [[nodiscard]] sf::Vector2u getTileSize() const;
 
 protected:
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;

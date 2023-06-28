@@ -1,3 +1,4 @@
+#include "Model/Chessboard.hpp"
 #include "View/ChessboardView.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
@@ -35,24 +36,26 @@ int main(int argc, char *argv[]) {
   window.setFramerateLimit(FPS_LIMIT);
 
   const TextureStore texture_store;
-  ChessboardView chessboard(vm.width, vm.height, texture_store);
-
-  Controller controller;
+  ChessboardView chessboard_view(vm.width, vm.height, texture_store);
+  Chessboard chessboard;
+  Controller controller(std::move(chessboard_view), std::move(chessboard));
 
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
+      if (event.type == sf::Event::MouseButtonPressed) {
+        controller.onMouseClicked(event.mouseButton);
+      } else if (event.type == sf::Event::Closed) {
         window.close();
       } else if (event.type == sf::Event::Resized) {
-        chessboard.resize(event.size.width, event.size.height);
+        chessboard_view.resize(event.size.width, event.size.height);
         window.setView(
             sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
       }
     }
 
     window.clear(sf::Color::Black);
-    window.draw(chessboard);
+    window.draw(chessboard_view);
     window.display();
   }
 
