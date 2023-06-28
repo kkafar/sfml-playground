@@ -1,7 +1,7 @@
 #ifndef __TEXTURE_STORE_HPP__
 #define __TEXTURE_STORE_HPP__
 
-#include "PieceKind.hpp"
+#include "Model/PieceKind.hpp"
 #include "SFML/Graphics/RenderStates.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "glog/logging.h"
@@ -35,8 +35,8 @@ public:
   }
 
   // Texture store retains all textures
-  const sf::Texture& textureForPieceKind(PieceKind piece_kind) const {
-    const sf::Texture& texture = store.at(pieceKindToString(piece_kind));
+  const sf::Texture &textureForPieceKind(PieceKind piece_kind) const {
+    const sf::Texture &texture = store.at(pieceKindToString(piece_kind));
     return texture;
   }
 

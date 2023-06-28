@@ -1,4 +1,4 @@
-#include "Chessboard.hpp"
+#include "View/Chessboard.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/Color.hpp"
@@ -7,7 +7,8 @@
 #include "SFML/Graphics/View.hpp"
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/VideoMode.hpp"
-#include "TextureStore.hpp"
+#include "Data/TextureStore.hpp"
+#include "Controller/Controller.hpp"
 #include <SFML/Graphics.hpp>
 #include <glog/logging.h>
 #include <iostream>
@@ -35,6 +36,8 @@ int main(int argc, char *argv[]) {
 
   const TextureStore texture_store;
   Chessboard chessboard(vm.width, vm.height, texture_store);
+
+  Controller controller;
 
   while (window.isOpen()) {
     sf::Event event;

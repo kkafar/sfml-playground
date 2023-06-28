@@ -1,10 +1,10 @@
 #ifndef __CHESSBOARD_HPP__
 #define __CHESSBOARD_HPP__
 
-#include "PieceKind.hpp"
-#include "PlayerKind.hpp"
+#include <Model/PieceKind.hpp>
+#include "Model/PlayerKind.hpp"
 #include "PlayerPieces.hpp"
-#include "Resizable.hpp"
+#include "View/Interfaces/Resizable.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
@@ -12,7 +12,7 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/System/Vector2.hpp"
-#include "TextureStore.hpp"
+#include <Data/TextureStore.hpp>
 #include <array>
 #include <glog/logging.h>
 
