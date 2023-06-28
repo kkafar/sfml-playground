@@ -1,17 +1,18 @@
 #ifndef __PLAYER_PIECES_HPP__
 #define __PLAYER_PIECES_HPP__
 
-#include "PieceKind.hpp"
-#include "PlayerKind.hpp"
+#include "Model/PieceKind.hpp"
+#include "Model/PlayerKind.hpp"
+#include "View/Interfaces/Resizable.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Texture.hpp"
-#include "TextureStore.hpp"
+#include "Data/TextureStore.hpp"
 #include <array>
 
-class PlayerPieces : public sf::Drawable {
+class PlayerPieces : public sf::Drawable, public Resizable {
 public:
   constexpr static sf::Uint32 PAWN_COUNT = 8;
   constexpr static sf::Uint32 BISHOP_COUNT = 2;
