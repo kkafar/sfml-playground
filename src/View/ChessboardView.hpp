@@ -1,5 +1,5 @@
-#ifndef __CHESSBOARD_HPP__
-#define __CHESSBOARD_HPP__
+#ifndef __CHESSBOARD_VIEW_HPP__
+#define __CHESSBOARD_VIEW_HPP__
 
 #include <Model/PieceKind.hpp>
 #include "Model/PlayerKind.hpp"
@@ -41,4 +41,4 @@ private:
   PlayerPieces m_player_black;
 };
 
-#endif // !__CHESSBOARD_HPP__
+#endif // !__CHESSBOARD_VIEW_HPP__
