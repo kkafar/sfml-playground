@@ -43,7 +43,9 @@ int main(int argc, char *argv[]) {
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
+      if (event.type == sf::Event::MouseButtonPressed) {
+        controller.onMouseClicked(event.mouseButton);
+      } else if (event.type == sf::Event::Closed) {
         window.close();
       } else if (event.type == sf::Event::Resized) {
         chessboard_view.resize(event.size.width, event.size.height);

@@ -1,4 +1,5 @@
 #include "ChessboardView.hpp"
+#include "SFML/System/Vector2.hpp"
 
 ChessboardView::ChessboardView(const sf::Uint32 width_px, const sf::Uint32 height_px,
                        const TextureStore &texture_store)
@@ -55,4 +56,12 @@ void ChessboardView::draw(sf::RenderTarget &target,
 
   target.draw(m_player_white);
   target.draw(m_player_black);
+}
+
+sf::Vector2u ChessboardView::getSize() const {
+  return {m_width_px, m_height_px};
+}
+
+sf::Vector2u ChessboardView::getTileSize() const {
+  return {m_tile_width_px, m_tile_height_px};
 }
