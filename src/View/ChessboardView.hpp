@@ -16,12 +16,12 @@
 #include <array>
 #include <glog/logging.h>
 
-class Chessboard : public sf::Drawable, public Resizable {
+class ChessboardView : public sf::Drawable, public Resizable {
 public:
   constexpr static sf::Uint32 WIDTH = 8;
   constexpr static sf::Uint32 HEIGHT = 8;
 
-  Chessboard(const sf::Uint32 width_px, const sf::Uint32 height_px,
+  ChessboardView(const sf::Uint32 width_px, const sf::Uint32 height_px,
              const TextureStore &texture_store);
 
   void resize(const sf::Uint32 width_px, const sf::Uint32 height_px);

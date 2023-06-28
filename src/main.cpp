@@ -1,4 +1,4 @@
-#include "View/Chessboard.hpp"
+#include "View/ChessboardView.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/Color.hpp"
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
   window.setFramerateLimit(FPS_LIMIT);
 
   const TextureStore texture_store;
-  Chessboard chessboard(vm.width, vm.height, texture_store);
+  ChessboardView chessboard(vm.width, vm.height, texture_store);
 
   Controller controller;
 

@@ -1,6 +1,6 @@
-#include "Chessboard.hpp"
+#include "ChessboardView.hpp"
 
-Chessboard::Chessboard(const sf::Uint32 width_px, const sf::Uint32 height_px,
+ChessboardView::ChessboardView(const sf::Uint32 width_px, const sf::Uint32 height_px,
                        const TextureStore &texture_store)
     : m_width_px(width_px), m_height_px(height_px),
       m_tile_width_px(width_px / WIDTH), m_tile_height_px(height_px / HEIGHT),
@@ -22,7 +22,7 @@ Chessboard::Chessboard(const sf::Uint32 width_px, const sf::Uint32 height_px,
   }
 }
 
-void Chessboard::resize(const sf::Uint32 width_px, const sf::Uint32 height_px) {
+void ChessboardView::resize(const sf::Uint32 width_px, const sf::Uint32 height_px) {
   if (m_width_px == width_px && m_height_px == height_px) {
     return;
   }
@@ -45,7 +45,7 @@ void Chessboard::resize(const sf::Uint32 width_px, const sf::Uint32 height_px) {
   m_player_white.resize(width_px, height_px);
 }
 
-void Chessboard::draw(sf::RenderTarget &target,
+void ChessboardView::draw(sf::RenderTarget &target,
                               sf::RenderStates states) const {
   for (const auto &field_row : m_fields) {
     for (const auto &field : field_row) {
