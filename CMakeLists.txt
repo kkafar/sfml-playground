@@ -12,7 +12,7 @@ set(SFML_LIB_DIR ${SFML_DIR}/lib)
 set(GLOG_DIR ${DEPENDENCIES_DIR}/glog-0.6.0)
 set(GLOG_LIB_DIR ${GLOG_DIR}/lib)
 
-add_executable(main src/main.cpp src/PieceKind.cpp)
+add_executable(main src/main.cpp src/PieceKind.cpp src/Controller.cpp src/PlayerKind.cpp)
 
 target_include_directories(main PUBLIC ${SFML_DIR}/include/ ${GLOG_DIR}/include/)
 target_link_libraries(main PUBLIC ${SFML_LIB_DIR}/libsfml-graphics.so ${SFML_LIB_DIR}/libsfml-window.so ${SFML_LIB_DIR}/libsfml-system.so ${GLOG_LIB_DIR}/libglog.so)
