@@ -4,7 +4,7 @@
 #include <Model/PieceKind.hpp>
 #include "Model/PlayerKind.hpp"
 #include "PlayerPieces.hpp"
-#include "View/Interfaces/Resizable.hpp"
+#include "View/Resizable.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
