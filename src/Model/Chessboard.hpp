@@ -27,7 +27,7 @@ public:
   bool movePiece(BoardPosition from_pos, BoardPosition to_pos);
 
   [[nodiscard]]
-  bool isTileEmpty(BoardPosition pos);
+  bool isTileEmpty(BoardPosition pos) const;
 
 private:
   // Array & pieces are owned by the Chessboard

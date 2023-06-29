@@ -32,11 +32,12 @@ bool Chessboard::insertPieceAt(Piece &&piece, BoardPosition pos) {
   if (m_board[pos.row][pos.col]) {
     return false;
   }
+  piece.setPosition(pos);
   m_board[pos.row][pos.col] = std::make_optional<Piece>(piece);
   return true;
 }
 
-inline bool Chessboard::isTileEmpty(BoardPosition pos) {
+inline bool Chessboard::isTileEmpty(BoardPosition pos) const {
   return m_board[pos.row][pos.col].has_value();
 }
 
