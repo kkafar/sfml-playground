@@ -5,23 +5,30 @@
 #include <functional>
 #include <optional>
 #include <unordered_map>
+#include <vector>
+#include "SFML/Config.hpp"
+#include "SFML/Graphics/Drawable.hpp"
 #include "View/PieceView.hpp"
 
 /**
  * Registry does own the views
  */
-class PieceViewRegistry {
+class PieceViewRegistry : public sf::Drawable {
 public:
-  using Tag = int32_t;
+  using Tag = sf::Uint32;
+  using PieceViewOpt = std::optional<PieceView>;
+  using PieceViewRefOpt = std::optional<std::reference_wrapper<PieceView>>;
+  using PieceViewConstRefOpt = std::optional<std::reference_wrapper<const PieceView>>;
 
   void insert(const Tag tag, const PieceView &&view);
   std::optional<PieceView> remove(const Tag tag);
-  std::optional<std::reference_wrapper<const PieceView>> viewForTag(const Tag tag);
+  PieceViewRefOpt viewForTag(const Tag tag);
+
+protected:
+  void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
-  std::unordered_map<Tag, PieceView> m_registry;
-
-  using Iterator = decltype(m_registry)::iterator;
+  std::vector<PieceViewOpt> m_registry{32};
 };
 
 #endif // !__PIECE_VIEW_REGISTRY_HPP__

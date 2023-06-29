@@ -11,6 +11,8 @@ public:
   using sf::Sprite::Sprite;
   using Tag = sf::Uint32;
 
+  PieceView(const sf::Texture &texture, Tag tag);
+
   [[nodiscard]] inline Tag tag() { return m_tag; };
 
   inline void setTag(Tag tag) { m_tag = tag; }

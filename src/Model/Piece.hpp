@@ -4,12 +4,13 @@
 #include "Model/MovePolicy.hpp"
 #include "Model/PlayerKind.hpp"
 #include "PieceKind.hpp"
+#include "SFML/Config.hpp"
 #include <cstdint>
 
 class Piece {
 public:
   using Color = PlayerKind;
-  using Tag = int32_t;
+  using Tag = sf::Uint32;
 
   Piece(const Piece::Color color, const PieceKind kind, const MovePolicy move_policy, const Tag tag);
 
