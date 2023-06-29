@@ -3,6 +3,7 @@
 
 #include "Model/PieceKind.hpp"
 #include "Model/PlayerKind.hpp"
+#include "View/PieceView.hpp"
 #include "View/Resizable.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Drawable.hpp"
@@ -39,16 +40,16 @@ public:
         texture_store.textureForPiece(m_player_kind, PieceKind::King);
 
     for (sf::Uint32 i = 0; i < PAWN_COUNT; ++i) {
-      m_pawns[i] = sf::Sprite(white_pawn_txt);
+      m_pawns[i] = PieceView(white_pawn_txt);
     }
-    m_bishops[0] = sf::Sprite(white_bishop_txt);
-    m_bishops[1] = sf::Sprite(white_bishop_txt);
-    m_rooks[0] = sf::Sprite(white_rook_txt);
-    m_rooks[1] = sf::Sprite(white_rook_txt);
-    m_knights[0] = sf::Sprite(white_knight_txt);
-    m_knights[1] = sf::Sprite(white_knight_txt);
-    m_queen = sf::Sprite(white_queen_txt);
-    m_king = sf::Sprite(white_king_txt);
+    m_bishops[0] = PieceView(white_bishop_txt);
+    m_bishops[1] = PieceView(white_bishop_txt);
+    m_rooks[0] = PieceView(white_rook_txt);
+    m_rooks[1] = PieceView(white_rook_txt);
+    m_knights[0] = PieceView(white_knight_txt);
+    m_knights[1] = PieceView(white_knight_txt);
+    m_queen = PieceView(white_queen_txt);
+    m_king = PieceView(white_king_txt);
 
     setInitialSpritePositions(tile_width_px, tile_height_px);
   }
@@ -74,12 +75,12 @@ protected:
 
 private:
   PlayerKind m_player_kind;
-  std::array<sf::Sprite, PAWN_COUNT> m_pawns;
-  std::array<sf::Sprite, BISHOP_COUNT> m_bishops;
-  std::array<sf::Sprite, ROOK_COUNT> m_rooks;
-  std::array<sf::Sprite, KNIGHT_COUNT> m_knights;
-  sf::Sprite m_queen;
-  sf::Sprite m_king;
+  std::array<PieceView, PAWN_COUNT> m_pawns;
+  std::array<PieceView, BISHOP_COUNT> m_bishops;
+  std::array<PieceView, ROOK_COUNT> m_rooks;
+  std::array<PieceView, KNIGHT_COUNT> m_knights;
+  PieceView m_queen;
+  PieceView m_king;
 
   void setInitialSpritePositions(const sf::Uint32 tile_width_px,
                                  const sf::Uint32 tile_height_px) {
@@ -102,7 +103,7 @@ private:
   void placePawns(const int row, const sf::Uint32 tile_width_px,
                   const sf::Uint32 tile_height_px) {
     for (sf::Uint32 i = 0; i < 8; ++i) {
-      sf::Sprite &pawn = m_pawns[i];
+      PieceView &pawn = m_pawns[i];
       pawn.setPosition(i * tile_width_px, row * tile_height_px);
     }
   }
@@ -124,7 +125,7 @@ private:
     float scale_x = static_cast<float>(tile_width_px) / m_pawns[0].getTexture()->getSize().x;
     float scale_y = static_cast<float>(tile_height_px) / m_pawns[0].getTexture()->getSize().y;
     for (sf::Uint32 i = 0; i < 8; ++i) {
-      sf::Sprite &pawn = m_pawns[i];
+      PieceView &pawn = m_pawns[i];
       pawn.setScale(scale_x, scale_y);
     }
 

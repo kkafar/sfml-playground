@@ -19,11 +19,13 @@ private:
   Chessboard m_board;
   PieceViewRegistry m_piece_view_registry;
 
+
   BoardPosition translateWindowCoordinatesToBoardPosition(int x, int y) const;
   sf::Vector2u translateBoardPositionToWindowCoordinates(BoardPosition pos) const;
 
   void initialize();
-  
+
+
 };
 
 #endif // !__CONTROLLER_HPP__
