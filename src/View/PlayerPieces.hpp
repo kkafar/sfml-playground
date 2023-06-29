@@ -25,30 +25,30 @@ public:
                const sf::Uint32 tile_height_px,
                const TextureStore &texture_store)
       : m_player_kind(player_kind) {
-    const sf::Texture &pawn_texture =
-        texture_store.textureForPieceKind(PieceKind::Pawn);
-    const sf::Texture &bishop_texture =
-        texture_store.textureForPieceKind(PieceKind::Bishop);
-    const sf::Texture &rook_texture =
-        texture_store.textureForPieceKind(PieceKind::Rook);
-    const sf::Texture &knight_texture =
-        texture_store.textureForPieceKind(PieceKind::Knight);
-    const sf::Texture &queen_texture =
-        texture_store.textureForPieceKind(PieceKind::Queen);
-    const sf::Texture &king_texture =
-        texture_store.textureForPieceKind(PieceKind::King);
+    const sf::Texture &white_pawn_txt =
+        texture_store.textureForPiece(m_player_kind, PieceKind::Pawn);
+    const sf::Texture &white_bishop_txt =
+        texture_store.textureForPiece(m_player_kind, PieceKind::Bishop);
+    const sf::Texture &white_rook_txt =
+        texture_store.textureForPiece(m_player_kind, PieceKind::Rook);
+    const sf::Texture &white_knight_txt =
+        texture_store.textureForPiece(m_player_kind, PieceKind::Knight);
+    const sf::Texture &white_queen_txt =
+        texture_store.textureForPiece(m_player_kind, PieceKind::Queen);
+    const sf::Texture &white_king_txt =
+        texture_store.textureForPiece(m_player_kind, PieceKind::King);
 
     for (sf::Uint32 i = 0; i < PAWN_COUNT; ++i) {
-      m_pawns[i] = sf::Sprite(pawn_texture);
+      m_pawns[i] = sf::Sprite(white_pawn_txt);
     }
-    m_bishops[0] = sf::Sprite(bishop_texture);
-    m_bishops[1] = sf::Sprite(bishop_texture);
-    m_rooks[0] = sf::Sprite(rook_texture);
-    m_rooks[1] = sf::Sprite(rook_texture);
-    m_knights[0] = sf::Sprite(knight_texture);
-    m_knights[1] = sf::Sprite(knight_texture);
-    m_queen = sf::Sprite(queen_texture);
-    m_king = sf::Sprite(king_texture);
+    m_bishops[0] = sf::Sprite(white_bishop_txt);
+    m_bishops[1] = sf::Sprite(white_bishop_txt);
+    m_rooks[0] = sf::Sprite(white_rook_txt);
+    m_rooks[1] = sf::Sprite(white_rook_txt);
+    m_knights[0] = sf::Sprite(white_knight_txt);
+    m_knights[1] = sf::Sprite(white_knight_txt);
+    m_queen = sf::Sprite(white_queen_txt);
+    m_king = sf::Sprite(white_king_txt);
 
     setInitialSpritePositions(tile_width_px, tile_height_px);
   }
