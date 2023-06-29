@@ -17,8 +17,15 @@ public:
 
   inline void setTag(Tag tag) { m_tag = tag; }
 
+  [[nodiscard]] inline bool isFocused() { return m_is_focused; }
+
+  void focus();
+  void blur();
+
 private:
   Tag m_tag;
+  bool m_is_focused{false};
+
 };
 
 #endif // !__PIECE_VIEW_HPP__

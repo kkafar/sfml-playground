@@ -42,6 +42,12 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
       m_board.getPieceAt(selected_pos);
   if (selected_piece) {
     LOG(INFO) << "Player selected piece at position" << selected_pos;
+    PieceView &piece_view = m_piece_view_registry.viewForTag(selected_piece->get().tag())->get();
+    if (!piece_view.isFocused()) {
+      piece_view.focus();
+    } else {
+      piece_view.blur();
+    }
   }
 }
 
