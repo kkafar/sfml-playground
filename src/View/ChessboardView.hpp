@@ -1,6 +1,8 @@
 #ifndef __CHESSBOARD_VIEW_HPP__
 #define __CHESSBOARD_VIEW_HPP__
 
+#include "Model/Move.hpp"
+#include "Model/Piece.hpp"
 #include "Model/PlayerKind.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Color.hpp"
@@ -14,6 +16,7 @@
 #include <Model/PieceKind.hpp>
 #include <array>
 #include <glog/logging.h>
+#include <vector>
 
 class ChessboardView : public sf::Drawable, public Resizable {
 public:
@@ -24,6 +27,8 @@ public:
                  const TextureStore &texture_store);
 
   void resize(const sf::Uint32 width_px, const sf::Uint32 height_px);
+
+  void tintPossibleMoves(const Piece &piece, const std::vector<Move> &moves);
 
   [[nodiscard]] sf::Vector2u getSize() const;
 
