@@ -1,4 +1,10 @@
+#include "Controller/PieceViewRegistry.hpp"
+#include "Data/Constants.hpp"
+#include "Model/BoardPosition.hpp"
 #include "Model/Chessboard.hpp"
+#include "Model/Piece.hpp"
+#include "Model/PlayerKind.hpp"
+#include "Model/PieceKind.hpp"
 #include "View/ChessboardView.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
@@ -10,9 +16,13 @@
 #include "SFML/Window/VideoMode.hpp"
 #include "Data/TextureStore.hpp"
 #include "Controller/Controller.hpp"
+#include "View/PieceView.hpp"
 #include <SFML/Graphics.hpp>
+#include <array>
+#include <cstdint>
 #include <glog/logging.h>
 #include <iostream>
+#include <vector>
 
 constexpr sf::Uint32 WINDOW_WIDTH = 1024;
 constexpr sf::Uint32 WINDOW_HEIGHT = 1024;
@@ -21,6 +31,20 @@ constexpr uint FPS_LIMIT = 60;
 void initLogging(const char *argv0) {
   fLB::FLAGS_logtostdout = true;
   google::InitGoogleLogging(argv0);
+}
+
+void initChessboard(Chessboard &board, PieceViewRegistry &piece_view_registry, const TextureStore &texture_store) {
+  for (uint32_t i = 0; i < 8; ++i) {
+    board.insertPieceAt(Piece(PlayerKind::White, Constant::piece_order[i], MovePolicy(), i), BoardPosition{0, i});
+    board.insertPieceAt(Piece(PlayerKind::White, PieceKind::Pawn, MovePolicy(), i + 8), BoardPosition{1, i});
+    board.insertPieceAt(Piece(PlayerKind::Black, Constant::piece_order[i], MovePolicy(), i + 16), BoardPosition{7, i});
+    board.insertPieceAt(Piece(PlayerKind::Black, PieceKind::Pawn, MovePolicy(), i + 24), BoardPosition{6, i});
+
+    piece_view_registry.insert(i, PieceView(texture_store.textureForPiece(PlayerKind::White, Constant::piece_order[i])));
+    piece_view_registry.insert(i + 8, PieceView(texture_store.textureForPiece(PlayerKind::White, PieceKind::Pawn)));
+    piece_view_registry.insert(i + 16, PieceView(texture_store.textureForPiece(PlayerKind::Black, Constant::piece_order[i])));
+    piece_view_registry.insert(i + 24, PieceView(texture_store.textureForPiece(PlayerKind::Black, PieceKind::Pawn)));
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -36,9 +60,13 @@ int main(int argc, char *argv[]) {
   window.setFramerateLimit(FPS_LIMIT);
 
   const TextureStore texture_store;
-  ChessboardView chessboard_view(vm.width, vm.height, texture_store);
   Chessboard chessboard;
-  Controller controller(std::move(chessboard_view), std::move(chessboard));
+  PieceViewRegistry piece_view_registry;
+
+  initChessboard(chessboard, piece_view_registry, texture_store);
+  ChessboardView chessboard_view(vm.width, vm.height, texture_store);
+
+  Controller controller(std::move(chessboard_view), std::move(chessboard), std::move(piece_view_registry));
 
   while (window.isOpen()) {
     sf::Event event;
@@ -48,14 +76,15 @@ int main(int argc, char *argv[]) {
       } else if (event.type == sf::Event::Closed) {
         window.close();
       } else if (event.type == sf::Event::Resized) {
-        chessboard_view.resize(event.size.width, event.size.height);
+        controller.onWindowResized(event.size);
         window.setView(
             sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
       }
     }
 
     window.clear(sf::Color::Black);
-    window.draw(chessboard_view);
+    window.draw(controller.chessboardView());
+    window.draw(controller.pieceViews());
     window.display();
   }
 

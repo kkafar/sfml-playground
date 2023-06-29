@@ -2,7 +2,6 @@
 #define __CHESSBOARD_VIEW_HPP__
 
 #include "Model/PlayerKind.hpp"
-#include "PlayerPieces.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
@@ -41,8 +40,8 @@ private:
   sf::Uint32 m_tile_width_px;
   sf::Uint32 m_tile_height_px;
 
-  PlayerPieces m_player_white;
-  PlayerPieces m_player_black;
+  // PlayerPieces m_player_white;
+  // PlayerPieces m_player_black;
 };
 
 #endif // !__CHESSBOARD_VIEW_HPP__

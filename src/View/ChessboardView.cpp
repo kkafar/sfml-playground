@@ -4,11 +4,12 @@
 ChessboardView::ChessboardView(const sf::Uint32 width_px, const sf::Uint32 height_px,
                        const TextureStore &texture_store)
     : m_width_px(width_px), m_height_px(height_px),
-      m_tile_width_px(width_px / WIDTH), m_tile_height_px(height_px / HEIGHT),
-      m_player_white(PlayerKind::White, m_tile_width_px, m_tile_height_px,
-                     texture_store),
-      m_player_black(PlayerKind::Black, m_tile_width_px, m_tile_height_px,
-                     texture_store) {
+      m_tile_width_px(width_px / WIDTH), m_tile_height_px(height_px / HEIGHT)
+      // m_player_white(PlayerKind::White, m_tile_width_px, m_tile_height_px,
+      //                texture_store),
+      // m_player_black(PlayerKind::Black, m_tile_width_px, m_tile_height_px,
+      //                texture_store) {
+{
   LOG(INFO) << "Chessboard ctor";
 
   for (sf::Uint32 i = 0; i < HEIGHT; ++i) {
@@ -42,8 +43,8 @@ void ChessboardView::resize(const sf::Uint32 width_px, const sf::Uint32 height_p
     }
   }
 
-  m_player_black.resize(width_px, height_px);
-  m_player_white.resize(width_px, height_px);
+  // m_player_black.resize(width_px, height_px);
+  // m_player_white.resize(width_px, height_px);
 }
 
 void ChessboardView::draw(sf::RenderTarget &target,
@@ -54,8 +55,8 @@ void ChessboardView::draw(sf::RenderTarget &target,
     }
   }
 
-  target.draw(m_player_white);
-  target.draw(m_player_black);
+  // target.draw(m_player_white);
+  // target.draw(m_player_black);
 }
 
 sf::Vector2u ChessboardView::getSize() const {
