@@ -52,11 +52,17 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
       }
       piece_view.focus();
       m_focused_piece = selected_piece; 
+      m_piece_move_buffer.clear();
+      m_focused_piece->get().allMoves(m_board, m_piece_move_buffer);
     } else {
       piece_view.blur();
       m_focused_piece = std::nullopt;
+      m_piece_move_buffer.clear();
     }
-  }
+  } else if (m_focused_piece) {
+    PieceView &focused_piece_view = m_piece_view_registry.viewForTag(m_focused_piece->get().tag())->get();
+    focused_piece_view.blur();
+  } 
 }
 
 void Controller::onWindowResized(const sf::Event::SizeEvent &event) {

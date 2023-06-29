@@ -2,13 +2,16 @@
 #define __PIECE_HPP__
 
 #include "Model/BoardPosition.hpp"
+#include "Model/Move.hpp"
 #include "Model/PlayerKind.hpp"
+#include "Model/MovePolicy.hpp"
 #include "PieceKind.hpp"
 #include "SFML/Config.hpp"
 #include <cstdint>
 #include <memory>
+#include <array>
 
-class MovePolicy;
+class Chessboard;
 
 class Piece {
 public:
@@ -23,6 +26,16 @@ public:
         const Tag tag);
 
   [[nodiscard]] inline const Tag tag() const noexcept { return m_tag; }
+
+  [[nodiscard]] inline Color color() const noexcept { return m_color; }
+
+  [[nodiscard]] inline PieceKind pieceKind() const noexcept { return m_kind; }
+
+  [[nodiscard]] inline BoardPosition position() const noexcept { return m_position; }
+
+  inline void allMoves(const Chessboard &board, std::vector<Move> result) {
+    m_move_policy_delegate->allMoves(*this, board, result);
+  }
 
   inline void setPosition(const BoardPosition new_pos) { m_position = new_pos; }
 

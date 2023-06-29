@@ -13,6 +13,10 @@ struct BoardPosition {
     stream << '(' << pos.row << ", " << pos.col << ')';
     return stream;
   }
+
+  BoardPosition operator +(const BoardPosition &other) {
+    return BoardPosition{row + other.row, col + other.col};
+  }
 };
 
 #endif // !__BOARD_POSITION_HPP__

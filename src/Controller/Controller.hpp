@@ -4,11 +4,13 @@
 #include "Controller/PieceViewRegistry.hpp"
 #include "Model/BoardPosition.hpp"
 #include "Model/Chessboard.hpp"
+#include "Model/Move.hpp"
 #include "SFML/System/Vector2.hpp"
 #include "SFML/Window/Event.hpp"
 #include "View/ChessboardView.hpp"
 #include <functional>
 #include <optional>
+#include <vector>
 
 class Controller {
 public:
@@ -25,6 +27,7 @@ private:
   Chessboard m_board;
   PieceViewRegistry m_piece_view_registry;
   std::optional<std::reference_wrapper<Piece>> m_focused_piece{std::nullopt};
+  std::vector<Move> m_piece_move_buffer;
 
 
   BoardPosition translateWindowCoordinatesToBoardPosition(int x, int y) const;
