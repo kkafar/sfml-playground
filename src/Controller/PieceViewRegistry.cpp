@@ -21,10 +21,8 @@ std::optional<PieceView> PieceViewRegistry::remove(const Tag tag) {
 
 std::optional<std::reference_wrapper<PieceView>> PieceViewRegistry::viewForTag(const Tag tag) {
   if (m_registry[tag]) {
-    LOG(INFO) << "Request for view for tag " << tag;
     return std::make_optional(std::ref(m_registry.at(tag).value()));
   }
-  LOG(WARNING) << "Missed request for view for tag " << tag;
   return std::nullopt;
 }
 

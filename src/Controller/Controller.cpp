@@ -26,7 +26,6 @@ Controller::Controller(ChessboardView &&board_view, Chessboard &&board, PieceVie
         PieceView &piece_view = m_piece_view_registry.viewForTag(piece->get().tag())->get();
         sf::Vector2u piece_view_position = translateBoardPositionToWindowCoordinates(current_position);
         piece_view.setPosition(piece_view_position.x, piece_view_position.y);
-        LOG(INFO) << "Pointer to texture: " << piece_view.getTexture() << "\n";
         piece_view.setScale(
             static_cast<float>(tile_dims.x) / piece_view.getTexture()->getSize().x,
             static_cast<float>(tile_dims.y) / piece_view.getTexture()->getSize().y

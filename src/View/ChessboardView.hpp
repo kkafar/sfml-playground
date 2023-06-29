@@ -2,7 +2,6 @@
 #define __CHESSBOARD_VIEW_HPP__
 
 #include "Model/PlayerKind.hpp"
-#include "PlayerPieces.hpp"
 #include "SFML/Config.hpp"
 #include "SFML/Graphics/Color.hpp"
 #include "SFML/Graphics/Drawable.hpp"
