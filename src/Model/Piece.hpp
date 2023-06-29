@@ -33,7 +33,7 @@ public:
 
   [[nodiscard]] inline BoardPosition position() const noexcept { return m_position; }
 
-  inline void allMoves(const Chessboard &board, std::vector<Move> result) {
+  inline void allMoves(const Chessboard &board, std::vector<Move> &result) {
     m_move_policy_delegate->allMoves(*this, board, result);
   }
 

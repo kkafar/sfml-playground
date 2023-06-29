@@ -1,4 +1,5 @@
 #include "ChessboardView.hpp"
+#include "SFML/Graphics/Color.hpp"
 #include "SFML/System/Vector2.hpp"
 
 ChessboardView::ChessboardView(const sf::Uint32 width_px, const sf::Uint32 height_px,
@@ -58,5 +59,9 @@ sf::Vector2u ChessboardView::getTileSize() const {
 }
 
 void ChessboardView::tintPossibleMoves(const Piece &piece, const std::vector<Move> &moves) {
-  
+  LOG(INFO) << "Number of available moves: " << moves.size();
+  for (const Move &move : moves) {
+    LOG(INFO) << "Tinting field " << move.pos;
+    m_fields[move.pos.row][move.pos.col].setFillColor(sf::Color::Red);
+  }
 }
