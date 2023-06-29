@@ -7,6 +7,8 @@
 #include "SFML/System/Vector2.hpp"
 #include "SFML/Window/Event.hpp"
 #include "View/ChessboardView.hpp"
+#include <functional>
+#include <optional>
 
 class Controller {
 public:
@@ -22,6 +24,7 @@ private:
   ChessboardView m_board_view;
   Chessboard m_board;
   PieceViewRegistry m_piece_view_registry;
+  std::optional<std::reference_wrapper<Piece>> m_focused_piece{std::nullopt};
 
 
   BoardPosition translateWindowCoordinatesToBoardPosition(int x, int y) const;

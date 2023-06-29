@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <functional>
 #include <glog/logging.h>
+#include <optional>
 
 Controller::Controller(ChessboardView &&board_view, Chessboard &&board, PieceViewRegistry &&pvr)
     : m_board_view(board_view), m_board(board), m_piece_view_registry(pvr) {
@@ -40,13 +41,20 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
       translateWindowCoordinatesToBoardPosition(event.x, event.y);
   std::optional<std::reference_wrapper<Piece>> selected_piece =
       m_board.getPieceAt(selected_pos);
+
   if (selected_piece) {
     LOG(INFO) << "Player selected piece at position" << selected_pos;
     PieceView &piece_view = m_piece_view_registry.viewForTag(selected_piece->get().tag())->get();
     if (!piece_view.isFocused()) {
+      if (m_focused_piece) {
+        PieceView &focused_piece_view = m_piece_view_registry.viewForTag(m_focused_piece->get().tag())->get();
+        focused_piece_view.blur();
+      }
       piece_view.focus();
+      m_focused_piece = selected_piece; 
     } else {
       piece_view.blur();
+      m_focused_piece = std::nullopt;
     }
   }
 }
