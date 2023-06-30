@@ -41,6 +41,15 @@ public:
 
   inline void setPosition(const BoardPosition new_pos) { m_position = new_pos; }
 
+
+  [[nodiscard]] inline bool operator ==(const Piece &other) const noexcept {
+    return this->m_tag == other.m_tag; 
+  }
+
+  [[nodiscard]] inline bool operator !=(const Piece &other) const noexcept {
+    return this->m_tag != other.m_tag;
+  }
+
 private:
   BoardPosition m_position{0, 0};
   std::shared_ptr<MovePolicy> m_move_policy_delegate;

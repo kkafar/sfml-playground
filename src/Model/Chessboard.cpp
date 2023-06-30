@@ -1,5 +1,6 @@
 #include "Chessboard.hpp"
 #include "Model/BoardPosition.hpp"
+#include "glog/logging.h"
 #include <cstdint>
 #include <functional>
 #include <math.h>
@@ -37,18 +38,15 @@ bool Chessboard::insertPieceAt(Piece &&piece, BoardPosition pos) {
   return true;
 }
 
-inline bool Chessboard::isTileEmpty(BoardPosition pos) const {
+bool Chessboard::isTileEmpty(BoardPosition pos) const {
   return m_board[pos.row][pos.col].has_value();
 }
 
 bool Chessboard::movePiece(BoardPosition from_pos, BoardPosition to_pos) {
-  if (!isTileEmpty(to_pos)) {
-    return false;
-  }
-
-  std::optional<Piece> piece = getPieceAt(from_pos);
+  std::optional<Piece> piece = removePieceFrom(from_pos);
 
   if (!piece) {
+    LOG(ERROR) << "Attempted to remove piece from empty position";
     return false;
   }
 

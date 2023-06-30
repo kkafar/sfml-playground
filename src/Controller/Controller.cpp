@@ -10,30 +10,80 @@
 #include <glog/logging.h>
 #include <optional>
 
-Controller::Controller(ChessboardView &&board_view, Chessboard &&board, PieceViewRegistry &&pvr)
+Controller::Controller(ChessboardView &&board_view, Chessboard &&board,
+                       PieceViewRegistry &&pvr)
     : m_board_view(board_view), m_board(board), m_piece_view_registry(pvr) {
   BoardPosition current_position{0, 0};
 
   sf::Vector2u tile_dims = board_view.getTileSize();
-
 
   for (uint32_t i_row = 0; i_row < 8; ++i_row) {
     for (uint32_t i_col = 0; i_col < 8; ++i_col) {
       current_position.row = i_row;
       current_position.col = i_col;
 
-      std::optional<std::reference_wrapper<Piece>> piece = m_board.getPieceAt(current_position);
+      std::optional<std::reference_wrapper<Piece>> piece =
+          m_board.getPieceAt(current_position);
       if (piece) {
-        PieceView &piece_view = m_piece_view_registry.viewForTag(piece->get().tag())->get();
-        sf::Vector2u piece_view_position = translateBoardPositionToWindowCoordinates(current_position);
+        PieceView &piece_view =
+            m_piece_view_registry.viewForTag(piece->get().tag())->get();
+        sf::Vector2u piece_view_position =
+            translateBoardPositionToWindowCoordinates(current_position);
         piece_view.setPosition(piece_view_position.x, piece_view_position.y);
-        piece_view.setScale(
-            static_cast<float>(tile_dims.x) / piece_view.getTexture()->getSize().x,
-            static_cast<float>(tile_dims.y) / piece_view.getTexture()->getSize().y
-        );
+        piece_view.setScale(static_cast<float>(tile_dims.x) /
+                                piece_view.getTexture()->getSize().x,
+                            static_cast<float>(tile_dims.y) /
+                                piece_view.getTexture()->getSize().y);
       }
     }
   }
+}
+
+void Controller::focusPiece(Piece &piece) {
+  if (m_focused_piece) {
+    return;
+  }
+
+  m_focused_piece = std::make_optional(std::ref(piece));
+  m_focused_piece_move_buf.clear();
+ 
+  PieceView &view = m_piece_view_registry.viewForTag(piece.tag())->get();
+  view.focus();
+
+  piece.allMoves(m_board, m_focused_piece_move_buf);
+  if (!m_focused_piece_move_buf.empty()) {
+    m_board_view.tintPossibleMoves(piece, m_focused_piece_move_buf);
+  }
+}
+
+void Controller::blurPiece() {
+  if (!m_focused_piece) {
+    return;
+  }
+
+  PieceView &view = m_piece_view_registry.viewForTag(m_focused_piece->get().tag())->get();
+  view.blur();
+  m_focused_piece.reset();
+  // TODO
+  // m_board_view.removePossibleMovesTint
+  
+}
+
+bool Controller::positionIsInMoves(const BoardPosition &pos, const std::vector<Move> &moves) const {
+  for (const Move &move : moves) {
+    if (move.pos == pos) {
+      return true;
+    }
+  }
+  return false;
+}
+
+void Controller::movePiece(Piece &piece, const BoardPosition &to_pos) {
+  m_board.movePiece(piece.position(), to_pos);
+
+  sf::Vector2u view_pos = translateBoardPositionToWindowCoordinates(to_pos);
+  m_piece_view_registry.viewForTag(piece.tag())->get().setPosition(view_pos.x, view_pos.y);
+  blurPiece();
 }
 
 void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
@@ -42,30 +92,27 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
   std::optional<std::reference_wrapper<Piece>> selected_piece =
       m_board.getPieceAt(selected_pos);
 
-  if (selected_piece) {
-    LOG(INFO) << "Player selected piece at position" << selected_pos;
-    PieceView &piece_view = m_piece_view_registry.viewForTag(selected_piece->get().tag())->get();
-    if (!piece_view.isFocused()) {
-      if (m_focused_piece) {
-        PieceView &focused_piece_view = m_piece_view_registry.viewForTag(m_focused_piece->get().tag())->get();
-        focused_piece_view.blur();
+
+  if (m_focused_piece) {
+    if (selected_piece) {
+      if (selected_piece->get() == m_focused_piece->get()) {
+        blurPiece();
+      } else if (selected_piece->get().color() == m_focused_piece->get().color()) {
+        blurPiece();
+        focusPiece(selected_piece->get());
+      } else {
+        // TODO attack move
       }
-      piece_view.focus();
-      m_focused_piece = selected_piece; 
-      m_piece_move_buffer.clear();
-      m_focused_piece->get().allMoves(m_board, m_piece_move_buffer);
-      LOG_IF(INFO, m_piece_move_buffer.empty()) << "EMPTY BUFFER RETURNED";
-      m_board_view.tintPossibleMoves(m_focused_piece->get(), m_piece_move_buffer);
     } else {
-      piece_view.blur();
-      m_focused_piece = std::nullopt;
-      m_piece_move_buffer.clear();
+      if (positionIsInMoves(selected_pos, m_focused_piece_move_buf)) {
+        movePiece(m_focused_piece->get(), selected_pos);
+      } else {
+        blurPiece();
+      }
     }
-  } else if (m_focused_piece) {
-    PieceView &focused_piece_view = m_piece_view_registry.viewForTag(m_focused_piece->get().tag())->get();
-    focused_piece_view.blur();
-    m_board_view.tintPossibleMoves(m_focused_piece->get(), m_piece_move_buffer);
-  } 
+  } else if (selected_piece) {
+    focusPiece(selected_piece->get());
+  }
 }
 
 void Controller::onWindowResized(const sf::Event::SizeEvent &event) {
@@ -86,4 +133,3 @@ Controller::translateBoardPositionToWindowCoordinates(BoardPosition pos) const {
   sf::Vector2u tile_size = m_board_view.getTileSize();
   return {pos.col * tile_size.x, pos.row * tile_size.y};
 }
-
