@@ -78,6 +78,14 @@ bool Controller::positionIsInMoves(const BoardPosition &pos, const std::vector<M
   return false;
 }
 
+void Controller::movePiece(Piece &piece, const BoardPosition &to_pos) {
+  m_board.movePiece(piece.position(), to_pos);
+
+  sf::Vector2u view_pos = translateBoardPositionToWindowCoordinates(to_pos);
+  m_piece_view_registry.viewForTag(piece.tag())->get().setPosition(view_pos.x, view_pos.y);
+  blurPiece();
+}
+
 void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
   BoardPosition selected_pos =
       translateWindowCoordinatesToBoardPosition(event.x, event.y);
@@ -97,8 +105,7 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
       }
     } else {
       if (positionIsInMoves(selected_pos, m_focused_piece_move_buf)) {
-        m_board.movePiece(m_focused_piece->get().position(), selected_pos); 
-        blurPiece();
+        movePiece(m_focused_piece->get(), selected_pos);
       } else {
         blurPiece();
       }
@@ -106,42 +113,6 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
   } else if (selected_piece) {
     focusPiece(selected_piece->get());
   }
-
-
-
-  return;
-  //
-  //
-  // if (selected_piece) {
-  //   LOG(INFO) << "Player selected piece at position" << selected_pos;
-  //   PieceView &piece_view =
-  //       m_piece_view_registry.viewForTag(selected_piece->get().tag())->get();
-  //   if (!piece_view.isFocused()) {
-  //     if (m_focused_piece) {
-  //       PieceView &focused_piece_view =
-  //           m_piece_view_registry.viewForTag(m_focused_piece->get().tag())
-  //               ->get();
-  //       focused_piece_view.blur();
-  //     }
-  //     piece_view.focus();
-  //     m_focused_piece = selected_piece;
-  //     m_focused_piece_move_buf.clear();
-  //     m_focused_piece->get().allMoves(m_board, m_focused_piece_move_buf);
-  //     LOG_IF(INFO, m_focused_piece_move_buf.empty()) << "EMPTY BUFFER RETURNED";
-  //     m_board_view.tintPossibleMoves(m_focused_piece->get(),
-  //                                    m_focused_piece_move_buf);
-  //   } else {
-  //     piece_view.blur();
-  //     m_focused_piece = std::nullopt;
-  //     m_focused_piece_move_buf.clear();
-  //   }
-  // } else if (m_focused_piece) {
-  //   PieceView &focused_piece_view =
-  //       m_piece_view_registry.viewForTag(m_focused_piece->get().tag())->get();
-  //   focused_piece_view.blur();
-  //   m_board_view.tintPossibleMoves(m_focused_piece->get(),
-  //                                  m_focused_piece_move_buf);
-  // }
 }
 
 void Controller::onWindowResized(const sf::Event::SizeEvent &event) {
