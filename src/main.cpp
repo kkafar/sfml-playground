@@ -37,11 +37,11 @@ void initLogging(const char *argv0) {
 }
 
 void initChessboard(Chessboard &board, PieceViewRegistry &piece_view_registry, const TextureStore &texture_store) {
-  for (uint32_t i = 0; i < 8; ++i) {
-    board.insertPieceAt(Piece(PlayerKind::White, Constant::piece_order[i], std::make_unique<PawnMovePolicy>(), i), BoardPosition{0, i});
-    board.insertPieceAt(Piece(PlayerKind::White, PieceKind::Pawn, std::make_unique<PawnMovePolicy>(), i + 8), BoardPosition{1, i});
-    board.insertPieceAt(Piece(PlayerKind::Black, Constant::piece_order[i], std::make_unique<PawnMovePolicy>(), i + 16), BoardPosition{7, i});
-    board.insertPieceAt(Piece(PlayerKind::Black, PieceKind::Pawn, std::make_unique<PawnMovePolicy>(), i + 24), BoardPosition{6, i});
+  for (int32_t i = 0; i < 8; ++i) {
+    board.insertPieceAt(Piece(PlayerKind::White, Constant::piece_order[i], std::make_unique<PawnMovePolicy>(PlayerKind::White), i), BoardPosition{0, i});
+    board.insertPieceAt(Piece(PlayerKind::White, PieceKind::Pawn, std::make_unique<PawnMovePolicy>(PlayerKind::White), i + 8), BoardPosition{1, i});
+    board.insertPieceAt(Piece(PlayerKind::Black, Constant::piece_order[i], std::make_unique<PawnMovePolicy>(PlayerKind::Black), i + 16), BoardPosition{7, i});
+    board.insertPieceAt(Piece(PlayerKind::Black, PieceKind::Pawn, std::make_unique<PawnMovePolicy>(PlayerKind::Black), i + 24), BoardPosition{6, i});
 
     piece_view_registry.insert(i, PieceView(texture_store.textureForPiece(PlayerKind::White, Constant::piece_order[i])));
     piece_view_registry.insert(i + 8, PieceView(texture_store.textureForPiece(PlayerKind::White, PieceKind::Pawn)));

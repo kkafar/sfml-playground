@@ -74,9 +74,9 @@ void Controller::onWindowResized(const sf::Event::SizeEvent &event) {
 
 BoardPosition
 Controller::translateWindowCoordinatesToBoardPosition(int x, int y) const {
-  uint32_t row = std::clamp(
+  int32_t row = std::clamp(
       static_cast<uint32_t>(y / m_board_view.getTileSize().y), 0u, 7u);
-  uint32_t col = std::clamp(
+  int32_t col = std::clamp(
       static_cast<uint32_t>(x / m_board_view.getTileSize().x), 0u, 7u);
   return {row, col};
 }

@@ -5,8 +5,8 @@
 #include <ostream>
 
 struct BoardPosition {
-  uint32_t row;
-  uint32_t col;
+  int32_t row;
+  int32_t col;
 
   friend std::ostream &operator<<(std::ostream &stream,
                                   const BoardPosition &pos) {

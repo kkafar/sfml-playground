@@ -14,7 +14,11 @@ public:
   MovePolicy(PieceKind piece_kind);
   [[nodiscard]] inline PieceKind pieceKind() { return m_kind; }
 
-  virtual void allMoves(const Piece &piece, const Chessboard &board, std::vector<Move> &result) = 0;
+  virtual void allMoves(const Piece &piece, Chessboard &board, std::vector<Move> &result) = 0;
+
+protected:
+  [[nodiscard]] bool isMoveInChessboardBounds(const Move &move);
+  [[nodiscard]] bool isPositionInChessboardBounds(const BoardPosition &pos);
 
 private:
   PieceKind m_kind;

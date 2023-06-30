@@ -38,6 +38,12 @@ protected:
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 private:
+  const static sf::Color s_black_field_color;
+  const static sf::Color s_white_field_color;
+  const static sf::Color s_tint_attack_color;
+  const static sf::Color s_tint_move_color;
+  const static sf::Color s_tint_blocked_color;
+
   std::array<std::array<sf::RectangleShape, WIDTH>, HEIGHT> m_fields;
 
   sf::Uint32 m_width_px;
