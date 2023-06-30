@@ -36,6 +36,9 @@ private:
   void focusPiece(Piece &piece);
   void blurPiece();
   void movePiece(Piece &piece, const BoardPosition &to_pos);
+  
+  /// This method effectively drops object that the passed reference points to.
+  /// Do not use passed reference anymore.
   void removePiece(Piece &piece);
 
   bool positionIsInMoves(const BoardPosition &pos, const std::vector<Move> &moves) const;
