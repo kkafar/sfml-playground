@@ -54,6 +54,8 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
       m_focused_piece = selected_piece; 
       m_piece_move_buffer.clear();
       m_focused_piece->get().allMoves(m_board, m_piece_move_buffer);
+      LOG_IF(INFO, m_piece_move_buffer.empty()) << "EMPTY BUFFER RETURNED";
+      m_board_view.tintPossibleMoves(m_focused_piece->get(), m_piece_move_buffer);
     } else {
       piece_view.blur();
       m_focused_piece = std::nullopt;
@@ -62,6 +64,7 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
   } else if (m_focused_piece) {
     PieceView &focused_piece_view = m_piece_view_registry.viewForTag(m_focused_piece->get().tag())->get();
     focused_piece_view.blur();
+    m_board_view.tintPossibleMoves(m_focused_piece->get(), m_piece_move_buffer);
   } 
 }
 
@@ -71,9 +74,9 @@ void Controller::onWindowResized(const sf::Event::SizeEvent &event) {
 
 BoardPosition
 Controller::translateWindowCoordinatesToBoardPosition(int x, int y) const {
-  uint32_t row = std::clamp(
+  int32_t row = std::clamp(
       static_cast<uint32_t>(y / m_board_view.getTileSize().y), 0u, 7u);
-  uint32_t col = std::clamp(
+  int32_t col = std::clamp(
       static_cast<uint32_t>(x / m_board_view.getTileSize().x), 0u, 7u);
   return {row, col};
 }

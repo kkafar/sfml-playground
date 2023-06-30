@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <memory>
 #include <array>
+#include <glog/logging.h>
 
 class Chessboard;
 
@@ -33,8 +34,9 @@ public:
 
   [[nodiscard]] inline BoardPosition position() const noexcept { return m_position; }
 
-  inline void allMoves(const Chessboard &board, std::vector<Move> result) {
+  inline void allMoves(Chessboard &board, std::vector<Move> &result) {
     m_move_policy_delegate->allMoves(*this, board, result);
+    LOG(INFO) << "Moves calculated: " << result.size();
   }
 
   inline void setPosition(const BoardPosition new_pos) { m_position = new_pos; }
