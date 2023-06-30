@@ -63,10 +63,8 @@ void Controller::blurPiece() {
 
   PieceView &view = m_piece_view_registry.viewForTag(m_focused_piece->get().tag())->get();
   view.blur();
+  m_board_view.clearMoveTints(m_focused_piece_move_buf);
   m_focused_piece.reset();
-  // TODO
-  // m_board_view.removePossibleMovesTint
-  
 }
 
 bool Controller::positionIsInMoves(const BoardPosition &pos, const std::vector<Move> &moves) const {
