@@ -35,15 +35,14 @@ void ChessboardView::resize(const sf::Uint32 width_px, const sf::Uint32 height_p
 
   m_width_px = width_px;
   m_height_px = height_px;
-
-  sf::Uint32 tile_width_px = m_width_px / WIDTH;
-  sf::Uint32 tile_height_px = m_height_px / HEIGHT;
+  m_tile_width_px = m_width_px / WIDTH;
+  m_tile_height_px = m_height_px / HEIGHT;
 
   for (sf::Uint32 i = 0; i < HEIGHT; ++i) {
     for (sf::Uint32 j = 0; j < WIDTH; ++j) {
       sf::RectangleShape &field = m_fields[i][j];
-      field.setSize(sf::Vector2f(tile_width_px, tile_height_px));
-      field.setPosition(j * tile_width_px, i * tile_height_px);
+      field.setSize(sf::Vector2f(m_tile_width_px, m_tile_height_px));
+      field.setPosition(j * m_tile_width_px, i * m_tile_height_px);
     }
   }
 }
