@@ -25,6 +25,12 @@ struct BoardPosition {
   [[nodiscard]] inline bool operator !=(const BoardPosition &other) const noexcept {
     return row != other.row || col != other.col;
   }
+
+  inline BoardPosition& operator +=(const BoardPosition &other) noexcept {
+    row += other.row;
+    col += other.col;
+    return *this;
+  }
 };
 
 #endif // !__BOARD_POSITION_HPP__
