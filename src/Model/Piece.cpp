@@ -1,6 +1,7 @@
 #include "Piece.hpp"
 #include "Model/BishopMovePolicy.hpp"
 #include "Model/BoardPosition.hpp"
+#include "Model/KingMovePolicy.hpp"
 #include "Model/MovePolicy.hpp"
 #include "Model/PawnMovePolicy.hpp"
 #include "Model/QueenMovePolicy.hpp"
@@ -18,6 +19,8 @@ std::unique_ptr<MovePolicy> movePolicyFactory(PieceKind piece, PlayerKind color)
       return std::make_unique<BishopMovePolicy>();
     case PieceKind::Queen:
       return std::make_unique<QueenMovePolicy>();
+    case PieceKind::King:
+      return std::make_unique<KingMovePolicy>();
     default:
       return std::make_unique<PawnMovePolicy>(color);
   }
