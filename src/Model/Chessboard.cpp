@@ -39,7 +39,8 @@ bool Chessboard::insertPieceAt(Piece &&piece, BoardPosition pos) {
 }
 
 bool Chessboard::isTileEmpty(BoardPosition pos) const {
-  return m_board[pos.row][pos.col].has_value();
+  LOG(INFO) << "Chessboard::isTileEmpty for " << pos << " returns " << !m_board[pos.row][pos.col].has_value();
+  return !m_board[pos.row][pos.col].has_value();
 }
 
 bool Chessboard::movePiece(BoardPosition from_pos, BoardPosition to_pos) {
