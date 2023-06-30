@@ -16,6 +16,7 @@
 #include <Model/PieceKind.hpp>
 #include <array>
 #include <glog/logging.h>
+#include <optional>
 #include <vector>
 
 class ChessboardView : public sf::Drawable, public Resizable {
@@ -29,6 +30,7 @@ public:
   void resize(const sf::Uint32 width_px, const sf::Uint32 height_px);
 
   void tintPossibleMoves(const Piece &piece, const std::vector<Move> &moves);
+  void clearMoveTints(const std::vector<Move> &moves);
 
   [[nodiscard]] sf::Vector2u getSize() const;
 
@@ -45,11 +47,13 @@ private:
   const static sf::Color s_tint_blocked_color;
 
   std::array<std::array<sf::RectangleShape, WIDTH>, HEIGHT> m_fields;
+  std::array<std::array<std::optional<sf::RectangleShape>, WIDTH>, HEIGHT> m_tint_rects;
 
   sf::Uint32 m_width_px;
   sf::Uint32 m_height_px;
   sf::Uint32 m_tile_width_px;
   sf::Uint32 m_tile_height_px;
+  bool m_show_tint_rects{false};
 
   // PlayerPieces m_player_white;
   // PlayerPieces m_player_black;
