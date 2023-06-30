@@ -7,6 +7,6 @@ PieceMovePolicyStore::PieceMovePolicyStore() : m_pawn_move_policy(PlayerKind::Wh
   
 }
 
-inline std::shared_ptr<MovePolicy> PieceMovePolicyStore::pawnMovePolicy() {
+std::shared_ptr<MovePolicy> PieceMovePolicyStore::pawnMovePolicy() {
   return std::shared_ptr<MovePolicy>(&m_pawn_move_policy);
 }

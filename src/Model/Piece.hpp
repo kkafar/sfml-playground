@@ -19,12 +19,9 @@ public:
   using Color = PlayerKind;
   using Tag = sf::Uint32;
 
-  Piece(const Piece::Color color, const PieceKind kind,
-        const std::shared_ptr<MovePolicy> mp_delegate, const Tag tag);
+  Piece(const Piece::Color color, const PieceKind kind, const Tag tag);
 
-  Piece(const Piece::Color color, const PieceKind kind,
-        const std::shared_ptr<MovePolicy> mp_delegate, const BoardPosition pos,
-        const Tag tag);
+  Piece(const Piece::Color color, const PieceKind kind, const BoardPosition pos, const Tag tag);
 
   [[nodiscard]] inline const Tag tag() const noexcept { return m_tag; }
 

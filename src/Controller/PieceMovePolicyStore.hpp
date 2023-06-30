@@ -11,7 +11,7 @@ class PieceMovePolicyStore {
 public:
   PieceMovePolicyStore();
 
-  [[nodiscard]] inline std::shared_ptr<MovePolicy> pawnMovePolicy();
+  [[nodiscard]] std::shared_ptr<MovePolicy> pawnMovePolicy();
 private:
   PawnMovePolicy m_pawn_move_policy;
 };
