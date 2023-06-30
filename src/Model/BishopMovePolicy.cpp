@@ -19,6 +19,8 @@ void BishopMovePolicy::allMoves(const Piece &piece, Chessboard &board, std::vect
       }
       break;
     }
+    crt_pos.row -= 1;
+    crt_pos.col -= 1;
   }
 
   // Right-up
@@ -34,6 +36,8 @@ void BishopMovePolicy::allMoves(const Piece &piece, Chessboard &board, std::vect
       }
       break;
     }
+    crt_pos.row -= 1;
+    crt_pos.col += 1;
   }
   
   // Left-down
@@ -49,6 +53,8 @@ void BishopMovePolicy::allMoves(const Piece &piece, Chessboard &board, std::vect
       }
       break;
     }
+    crt_pos.row += 1;
+    crt_pos.col -= 1;
   }
   
   // Right-down
@@ -64,5 +70,7 @@ void BishopMovePolicy::allMoves(const Piece &piece, Chessboard &board, std::vect
       }
       break;
     }
+    crt_pos.row += 1;
+    crt_pos.col += 1;
   }
 }
