@@ -19,7 +19,10 @@ public:
 private:
   PlayerKind m_pawn_color;
   BoardPosition m_normal_move_offset;
+  int m_initial_row;
   std::array<BoardPosition, 2> m_attack_move_offsets;
+
+  bool isInInitialRow(const Piece &piece);
 };
 
 #endif // !__PAWN_MOVE_POLICY_HPP__
