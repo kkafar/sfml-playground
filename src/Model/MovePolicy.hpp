@@ -19,6 +19,7 @@ public:
 protected:
   [[nodiscard]] bool isMoveInChessboardBounds(const Move &move);
   [[nodiscard]] bool isPositionInChessboardBounds(const BoardPosition &pos);
+  [[nodiscard]] Move::Kind classifyMove(const Piece &piece, Chessboard &board, const BoardPosition &pos);
 
 private:
   PieceKind m_kind;
