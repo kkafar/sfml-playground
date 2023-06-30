@@ -86,6 +86,11 @@ void Controller::movePiece(Piece &piece, const BoardPosition &to_pos) {
   blurPiece();
 }
 
+void Controller::removePiece(Piece &piece) {
+  m_piece_view_registry.remove(piece.tag());
+  m_board.removePieceFrom(piece.position());
+}
+
 void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
   BoardPosition selected_pos =
       translateWindowCoordinatesToBoardPosition(event.x, event.y);
@@ -101,7 +106,10 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
         blurPiece();
         focusPiece(selected_piece->get());
       } else {
-        // TODO attack move
+        if (positionIsInMoves(selected_pos, m_focused_piece_move_buf)) {
+          removePiece(selected_piece->get());
+          movePiece(m_focused_piece->get(), selected_pos);
+        }
       }
     } else {
       if (positionIsInMoves(selected_pos, m_focused_piece_move_buf)) {
