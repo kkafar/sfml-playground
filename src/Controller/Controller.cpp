@@ -3,6 +3,7 @@
 #include "Model/BoardPosition.hpp"
 #include "Model/Chessboard.hpp"
 #include "Model/Piece.hpp"
+#include "Model/PlayerKind.hpp"
 #include "SFML/System/Vector2.hpp"
 #include <algorithm>
 #include <cstdint>
@@ -76,12 +77,17 @@ bool Controller::positionIsInMoves(const BoardPosition &pos, const std::vector<M
   return false;
 }
 
+void Controller::togglePlayer() {
+  m_active_player = m_active_player == PlayerKind::White ? PlayerKind::Black : PlayerKind::White;
+}
+
 void Controller::movePiece(Piece &piece, const BoardPosition &to_pos) {
   m_board.movePiece(piece.position(), to_pos);
 
   sf::Vector2u view_pos = translateBoardPositionToWindowCoordinates(to_pos);
   m_piece_view_registry.viewForTag(piece.tag())->get().setPosition(view_pos.x, view_pos.y);
   blurPiece();
+  togglePlayer();
 }
 
 void Controller::removePiece(Piece &piece) {
@@ -117,7 +123,9 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
       }
     }
   } else if (selected_piece) {
-    focusPiece(selected_piece->get());
+    if (selected_piece->get().color() == m_active_player) {
+      focusPiece(selected_piece->get());
+    }
   }
 }
 

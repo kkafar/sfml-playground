@@ -5,6 +5,7 @@
 #include "Model/BoardPosition.hpp"
 #include "Model/Chessboard.hpp"
 #include "Model/Move.hpp"
+#include "Model/PlayerKind.hpp"
 #include "SFML/System/Vector2.hpp"
 #include "SFML/Window/Event.hpp"
 #include "View/ChessboardView.hpp"
@@ -28,6 +29,7 @@ private:
   PieceViewRegistry m_piece_view_registry;
   std::optional<std::reference_wrapper<Piece>> m_focused_piece{std::nullopt};
   std::vector<Move> m_focused_piece_move_buf;
+  PlayerKind m_active_player{PlayerKind::White};
 
 
   BoardPosition translateWindowCoordinatesToBoardPosition(int x, int y) const;
@@ -42,6 +44,7 @@ private:
   void removePiece(Piece &piece);
 
   bool positionIsInMoves(const BoardPosition &pos, const std::vector<Move> &moves) const;
+  void togglePlayer();
 };
 
 #endif // !__CONTROLLER_HPP__
