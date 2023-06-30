@@ -3,10 +3,10 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/System/Vector2.hpp"
 
-const sf::Color ChessboardView::s_black_field_color = sf::Color::Black;
-const sf::Color ChessboardView::s_white_field_color = sf::Color::White;
-const sf::Color ChessboardView::s_tint_attack_color = sf::Color(255, 137, 102, 255);
-const sf::Color ChessboardView::s_tint_move_color = sf::Color(0, 155, 114, 255);
+const sf::Color ChessboardView::s_black_field_color = sf::Color(86, 65, 56, 255);
+const sf::Color ChessboardView::s_white_field_color = sf::Color(247, 243, 227, 255);
+const sf::Color ChessboardView::s_tint_attack_color = sf::Color(203, 128, 125, 255);
+const sf::Color ChessboardView::s_tint_move_color = sf::Color(67, 170, 139, 255);
 const sf::Color ChessboardView::s_tint_blocked_color = sf::Color(187, 159, 6, 255);
 
 ChessboardView::ChessboardView(const sf::Uint32 width_px, const sf::Uint32 height_px,
