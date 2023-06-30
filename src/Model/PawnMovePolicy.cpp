@@ -2,57 +2,33 @@
 #include "Model/BoardPosition.hpp"
 #include "Model/Chessboard.hpp"
 #include "Model/Piece.hpp"
+#include "Model/PlayerKind.hpp"
 #include <algorithm>
 #include <glog/logging.h>
 
+PawnMovePolicy::PawnMovePolicy(PlayerKind piece_color) : MovePolicy(PieceKind::Pawn), m_pawn_color(piece_color) {
+  if (m_pawn_color == PlayerKind::Black) {
+    m_normal_move_offset = BoardPosition{-1, 0};
+    m_attack_move_offsets[0] = BoardPosition{-1, -1};
+    m_attack_move_offsets[1] = BoardPosition{-1, 1};
+  } else {
+    m_normal_move_offset = BoardPosition{1, 0};
+    m_attack_move_offsets[0] = BoardPosition{1, -1};
+    m_attack_move_offsets[1] = BoardPosition{1, 1};
+  }
+}
+
 void PawnMovePolicy::allMoves(const Piece &piece, Chessboard &board,
                               std::vector<Move> &result) {
-  LOG(INFO) << "Calculating moves for Pawn";
-  if (piece.color() == Piece::Color::White) {
-    whitePawnMoves(piece, board, result);
-  } else {
-    blackPawnMoves(piece, board, result);
+  BoardPosition crt_pos = piece.position() + m_normal_move_offset;
+  if (isPositionInChessboardBounds(crt_pos) && board.isTileEmpty(crt_pos)) {
+    result.push_back(Move { crt_pos, Move::Kind::Normal });
   }
-}
-
-void PawnMovePolicy::whitePawnMoves(const Piece &piece, Chessboard &board,
-                                    std::vector<Move> &result) {
-  LOG(INFO) << "Calculating moves for WhitePawn";
-  for (BoardPosition offset : PawnMovePolicy::s_white_pawn_moves) {
-    BoardPosition potential_pos = piece.position() + offset;
-    pawnMovesFromOffsets(piece, board, result, potential_pos);
-  }
-}
-
-void PawnMovePolicy::blackPawnMoves(const Piece &piece, Chessboard &board,
-                                    std::vector<Move> &result) {
-  LOG(INFO) << "Calculating moves for BlackPawn";
-  for (BoardPosition offset : PawnMovePolicy::s_black_pawn_moves) {
-    BoardPosition potential_pos = piece.position() + offset;
-    pawnMovesFromOffsets(piece, board, result, potential_pos);
-  }
-}
-
-void PawnMovePolicy::pawnMovesFromOffsets(const Piece &piece, Chessboard &board,
-                                          std::vector<Move> &result,
-                                          const BoardPosition &potential_pos) {
-  // LOG(INFO) << "Considering position: " << potential_pos;
-
-  if (isPositionInChessboardBounds(potential_pos)) {
-    // LOG(INFO) << "Position lies on the board";
-    if (board.isTileEmpty(potential_pos)) {
-      // LOG(INFO) << "Position is empty";
-      result.push_back(Move{potential_pos, Move::Kind::Normal});
-    } else {
-      LOG_IF(ERROR, !board.getPieceAt(potential_pos)) << "Board returned nullopt instead of piece";
-
-      const Piece &piece_at_target_pos = board.getPieceAt(potential_pos)->get();
-      if (piece_at_target_pos.color() == piece.color()) {
-        // LOG(INFO) << "Position is occupied by the same color piece";
-        result.push_back(Move{potential_pos, Move::Kind::Blocked});
-      } else {
-        // LOG(INFO) << "Position is occupied by different color piece";
-        result.push_back(Move{potential_pos, Move::Kind::Attack});
+  for (const BoardPosition &offset : m_attack_move_offsets) {
+    crt_pos = piece.position() + offset;
+    if (isPositionInChessboardBounds(crt_pos) && !board.isTileEmpty(crt_pos)) {
+      if (board.getPieceAt(crt_pos)->get().color() != piece.color()) {
+        result.push_back(Move { crt_pos, Move::Kind::Attack });
       }
     }
   }
