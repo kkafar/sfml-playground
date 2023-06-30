@@ -27,11 +27,16 @@ private:
   Chessboard m_board;
   PieceViewRegistry m_piece_view_registry;
   std::optional<std::reference_wrapper<Piece>> m_focused_piece{std::nullopt};
-  std::vector<Move> m_piece_move_buffer;
+  std::vector<Move> m_focused_piece_move_buf;
 
 
   BoardPosition translateWindowCoordinatesToBoardPosition(int x, int y) const;
   sf::Vector2u translateBoardPositionToWindowCoordinates(BoardPosition pos) const;
+
+  void focusPiece(Piece &piece);
+  void blurPiece();
+
+  bool positionIsInMoves(const BoardPosition &pos, const std::vector<Move> &moves) const;
 };
 
 #endif // !__CONTROLLER_HPP__
