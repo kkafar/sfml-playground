@@ -9,7 +9,7 @@ void RookMovePolicy::allMoves(const Piece &piece, Chessboard &board, std::vector
   // Moves to the left
   for (int i = crt_pos.col - 1; i >= 0; --i) {
     crt_pos.col = i;
-    LOG(INFO) << "RookMovePolicy::allMoves looking at pos " << crt_pos;
+    // LOG(INFO) << "RookMovePolicy::allMoves looking at pos " << crt_pos;
     if (board.isTileEmpty(crt_pos)) {
       result.push_back(Move { crt_pos, Move::Kind::Normal });
     } else {
