@@ -5,6 +5,7 @@
 #include "Model/KnightMovePolicy.hpp"
 #include "Model/MovePolicy.hpp"
 #include "Model/PawnMovePolicy.hpp"
+#include "Model/PlayerKind.hpp"
 #include "Model/QueenMovePolicy.hpp"
 #include "Model/RookMovePolicy.hpp"
 #include "PieceKind.hpp"
@@ -21,7 +22,7 @@ std::unique_ptr<MovePolicy> movePolicyFactory(PieceKind piece, PlayerKind color)
     case PieceKind::Queen:
       return std::make_unique<QueenMovePolicy>();
     case PieceKind::King:
-      return std::make_unique<KingMovePolicy>();
+      return std::make_unique<KingMovePolicy>(color == PlayerKind::White ? 0 : 7);
     case PieceKind::Knight:
       return std::make_unique<KnightMovePolicy>();
     default:

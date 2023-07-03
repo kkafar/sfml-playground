@@ -34,6 +34,7 @@ bool Chessboard::insertPieceAt(Piece &&piece, BoardPosition pos) {
     return false;
   }
   piece.setPosition(pos);
+  piece.markAsMoved();
   m_board[pos.row][pos.col] = std::make_optional<Piece>(piece);
   return true;
 }
