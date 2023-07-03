@@ -94,7 +94,8 @@ void Controller::performPlayerMove(Piece &piece, const Move &move) {
     movePiece(rook, Move { target_rook_pos, Move::Kind::Normal });
   } else if (piece.kind() == Piece::Kind::Pawn && (move.pos.row == 0 || move.pos.row == 7)) {
     // TODO: Allow player to select piece kind
-    m_board.getPieceAt(move.pos)->get().setKind(Piece::Kind::Queen);
+    Piece &piece = m_board.getPieceAt(move.pos)->get();
+    piece.setKind(Piece::Kind::Queen);
     PieceView &view = m_piece_view_registry.viewForTag(piece.tag())->get();
     view.setTexture(m_texture_store.textureForPiece(piece.color(), piece.kind()));
   }
