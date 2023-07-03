@@ -15,6 +15,7 @@ public:
   /// and puts the result in provided vector. Make sure (or not) that the vector is empty
   /// before you pass it into this function.
   void allMoves(const Piece &piece, Chessboard &board, std::vector<Move> &result) override;
+  void attackMoves(const Piece &piece, Chessboard &board, std::vector<Move> &result) override;
 
 private:
   PlayerKind m_pawn_color;

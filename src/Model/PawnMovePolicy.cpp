@@ -33,7 +33,15 @@ void PawnMovePolicy::allMoves(const Piece &piece, Chessboard &board,
       result.push_back(Move{crt_pos, Move::Kind::Normal});
     }
   }
+  attackMoves(piece, board, result);
+}
 
+bool PawnMovePolicy::isInInitialRow(const Piece &piece) {
+  return piece.position().row == m_initial_row;
+}
+
+void PawnMovePolicy::attackMoves(const Piece &piece, Chessboard &board, std::vector<Move> &result) {
+  BoardPosition crt_pos;
   for (const BoardPosition &offset : m_attack_move_offsets) {
     crt_pos = piece.position() + offset;
     if (isPositionInChessboardBounds(crt_pos) && !board.isTileEmpty(crt_pos)) {
@@ -42,8 +50,4 @@ void PawnMovePolicy::allMoves(const Piece &piece, Chessboard &board,
       }
     }
   }
-}
-
-bool PawnMovePolicy::isInInitialRow(const Piece &piece) {
-  return piece.position().row == m_initial_row;
 }
