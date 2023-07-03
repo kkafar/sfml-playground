@@ -50,6 +50,7 @@ bool Chessboard::movePiece(BoardPosition from_pos, BoardPosition to_pos) {
     LOG(ERROR) << "Attempted to remove piece from empty position";
     return false;
   }
+  piece.value().markAsMoved();
 
   return insertPieceAt(std::move(piece.value()), to_pos);
 }

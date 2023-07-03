@@ -10,6 +10,7 @@ const sf::Color ChessboardView::s_white_field_color = sf::Color(247, 243, 227, 2
 const sf::Color ChessboardView::s_tint_attack_color = sf::Color(203, 128, 125, 100);
 const sf::Color ChessboardView::s_tint_move_color = sf::Color(67, 170, 139, 100);
 const sf::Color ChessboardView::s_tint_blocked_color = sf::Color(187, 159, 6, 100);
+const sf::Color ChessboardView::s_tint_castle_color = s_tint_move_color;
 
 ChessboardView::ChessboardView(const sf::Uint32 width_px, const sf::Uint32 height_px,
                        const TextureStore &texture_store)
@@ -82,6 +83,7 @@ void ChessboardView::tintPossibleMoves(const Piece &piece, const std::vector<Mov
     field.setPosition(move.pos.col * m_tile_width_px, move.pos.row * m_tile_height_px);
     switch (move.kind) {
       case Move::Kind::Normal: 
+      case Move::Kind::Castle:
         field.setFillColor(s_tint_move_color);
         break;
       case Move::Kind::Attack:

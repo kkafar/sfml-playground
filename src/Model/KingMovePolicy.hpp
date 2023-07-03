@@ -2,27 +2,33 @@
 #define __KING_MOVE_POLICY_HPP__
 
 #include "Model/BoardPosition.hpp"
+#include "Model/Chessboard.hpp"
 #include "Model/MovePolicy.hpp"
+#include "Model/PlayerKind.hpp"
 #include "PieceKind.hpp"
+#include "SFML/Config.hpp"
 #include <array>
 
 class KingMovePolicy : public MovePolicy {
 public:
-  KingMovePolicy() : MovePolicy(PieceKind::King) {}
+  KingMovePolicy(const PlayerKind piece_color);
 
-  void allMoves(const Piece &piece, Chessboard &board, std::vector<Move> &result) override;
+  void allMoves(const Piece &piece, Chessboard &board,
+                std::vector<Move> &result) override;
 
 private:
-  constexpr static std::array<BoardPosition, 8> s_offsets {
-    BoardPosition{-1, -1}, 
-    BoardPosition{-1, 0},
-    BoardPosition{-1, 1},
-    BoardPosition{0, -1},
-    BoardPosition{0, 1},
-    BoardPosition{1, -1},
-    BoardPosition{1, 0},
-    BoardPosition{1, 1} 
-  };
+  constexpr static std::array<BoardPosition, 8> s_offsets{
+      BoardPosition{-1, -1}, BoardPosition{-1, 0}, BoardPosition{-1, 1},
+      BoardPosition{0, -1},  BoardPosition{0, 1},  BoardPosition{1, -1},
+      BoardPosition{1, 0},   BoardPosition{1, 1}};
+
+  std::array<BoardPosition, 2> m_rook_positions;
+
+  PlayerKind m_color;
+
+  bool allEmptyInRowBetweenPositions(const Chessboard &board,
+                                const BoardPosition &pos_1,
+                                const BoardPosition &pos_2);
 };
 
 #endif // !__KING_MOVE_POLICY_HPP__

@@ -4,6 +4,7 @@
 #include "Model/Chessboard.hpp"
 #include "Model/Piece.hpp"
 #include "Model/PlayerKind.hpp"
+#include "SFML/Config.hpp"
 #include "SFML/System/Vector2.hpp"
 #include <algorithm>
 #include <cstdint>
@@ -68,26 +69,40 @@ void Controller::blurPiece() {
   m_focused_piece.reset();
 }
 
-bool Controller::positionIsInMoves(const BoardPosition &pos, const std::vector<Move> &moves) const {
+std::optional<Move> Controller::positionIsInMoves(const BoardPosition &pos, const std::vector<Move> &moves) const {
   for (const Move &move : moves) {
     if (move.pos == pos) {
-      return true;
+      return move;
     }
   }
-  return false;
+  return std::nullopt;
 }
 
 void Controller::togglePlayer() {
   m_active_player = m_active_player == PlayerKind::White ? PlayerKind::Black : PlayerKind::White;
 }
 
-void Controller::movePiece(Piece &piece, const BoardPosition &to_pos) {
-  m_board.movePiece(piece.position(), to_pos);
+void Controller::performPlayerMove(Piece &piece, const Move &move) {
+  movePiece(piece, move);
+  if (move.kind == Move::Kind::Castle) {
+    BoardPosition piece_pos = piece.position();
+    BoardPosition rook_pos = BoardPosition { piece_pos.row, move.pos.col > piece_pos.col ? 7 : 0 };
+    BoardPosition target_rook_pos = BoardPosition { piece_pos.row, move.pos.col > piece_pos.col ? piece_pos.col + 1 : piece_pos.col - 1 };
 
-  sf::Vector2u view_pos = translateBoardPositionToWindowCoordinates(to_pos);
+    Piece &rook = m_board.getPieceAt(rook_pos)->get();
+    movePiece(rook, Move { target_rook_pos, Move::Kind::Normal });
+  }
+}
+
+void Controller::movePiece(Piece &piece, const Move &move) {
+  BoardPosition piece_pos = piece.position();
+
+  m_board.movePiece(piece_pos, move.pos);
+
+  sf::Vector2u view_pos = translateBoardPositionToWindowCoordinates(move.pos);
   m_piece_view_registry.viewForTag(piece.tag())->get().setPosition(view_pos.x, view_pos.y);
+  
   blurPiece();
-  togglePlayer();
 }
 
 void Controller::removePiece(Piece &piece) {
@@ -110,14 +125,18 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
         blurPiece();
         focusPiece(selected_piece->get());
       } else {
-        if (positionIsInMoves(selected_pos, m_focused_piece_move_buf)) {
+        std::optional<Move> move_opt = positionIsInMoves(selected_pos, m_focused_piece_move_buf);
+        if (move_opt) {
           removePiece(selected_piece->get());
-          movePiece(m_focused_piece->get(), selected_pos);
+          performPlayerMove(m_focused_piece->get(), move_opt.value());
+          togglePlayer();
         }
       }
     } else {
-      if (positionIsInMoves(selected_pos, m_focused_piece_move_buf)) {
-        movePiece(m_focused_piece->get(), selected_pos);
+      std::optional<Move> move_opt = positionIsInMoves(selected_pos, m_focused_piece_move_buf);
+      if (move_opt) {
+        performPlayerMove(m_focused_piece->get(), move_opt.value());
+        togglePlayer();
       } else {
         blurPiece();
       }

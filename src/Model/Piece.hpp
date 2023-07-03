@@ -36,8 +36,11 @@ public:
     LOG(INFO) << "Moves calculated: " << result.size();
   }
 
-  inline void setPosition(const BoardPosition new_pos) { m_position = new_pos; }
+  inline void setPosition(const BoardPosition new_pos) noexcept { m_position = new_pos; }
 
+  void markAsMoved() noexcept { m_has_moved = true; }
+
+  [[nodiscard]] bool wasMoved() const noexcept { return m_has_moved; }
 
   [[nodiscard]] inline bool operator ==(const Piece &other) const noexcept {
     return this->m_tag == other.m_tag; 
@@ -49,6 +52,7 @@ public:
 
 private:
   BoardPosition m_position{0, 0};
+  bool m_has_moved{false};
   std::shared_ptr<MovePolicy> m_move_policy_delegate;
   Color m_color;
   PieceKind m_kind;

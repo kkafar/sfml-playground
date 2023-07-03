@@ -7,6 +7,7 @@ struct Move {
   enum class Kind {
     Normal,
     Attack,
+    Castle,
     Blocked,
     Invalid,
   };
