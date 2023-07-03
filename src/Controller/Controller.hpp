@@ -2,6 +2,7 @@
 #define __CONTROLLER_HPP__
 
 #include "Controller/PieceViewRegistry.hpp"
+#include "Data/TextureStore.hpp"
 #include "Model/BoardPosition.hpp"
 #include "Model/Chessboard.hpp"
 #include "Model/Move.hpp"
@@ -15,7 +16,7 @@
 
 class Controller {
 public:
-  Controller(ChessboardView &&board_view, Chessboard &&board, PieceViewRegistry &&pvr);
+  Controller(ChessboardView &&board_view, Chessboard &&board, PieceViewRegistry &&pvr, const TextureStore &texture_store);
 
   void onMouseClicked(const sf::Event::MouseButtonEvent &event);
   void onWindowResized(const sf::Event::SizeEvent &event);
@@ -27,6 +28,7 @@ private:
   ChessboardView m_board_view;
   Chessboard m_board;
   PieceViewRegistry m_piece_view_registry;
+  TextureStore m_texture_store;
   std::optional<std::reference_wrapper<Piece>> m_focused_piece{std::nullopt};
   std::vector<Move> m_focused_piece_move_buf;
   PlayerKind m_active_player{PlayerKind::White};

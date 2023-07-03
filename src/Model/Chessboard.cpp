@@ -17,6 +17,7 @@ Chessboard::Chessboard() {
 std::optional<std::reference_wrapper<Piece>> Chessboard::getPieceAt(BoardPosition pos) {
   std::optional<Piece> &piece_opt = m_board[pos.row][pos.col];
   if (piece_opt) {
+    LOG(INFO) << "Piece found at " << pos;
     return std::make_optional<std::reference_wrapper<Piece>>(std::ref(piece_opt.value()));
   } else {
     return std::nullopt;
@@ -24,7 +25,8 @@ std::optional<std::reference_wrapper<Piece>> Chessboard::getPieceAt(BoardPositio
 }
 
 std::optional<Piece> Chessboard::removePieceFrom(BoardPosition pos) {
-  std::optional<Piece> return_value = m_board[pos.row][pos.col];
+  // std::optional<Piece> return_value = std::move(m_board[pos.row][pos.col]);
+  std::optional<Piece> return_value = std::move(m_board[pos.row][pos.col]);
   m_board[pos.row][pos.col] = std::nullopt;
   return return_value;
 }
@@ -34,7 +36,7 @@ bool Chessboard::insertPieceAt(Piece &&piece, BoardPosition pos) {
     return false;
   }
   piece.setPosition(pos);
-  m_board[pos.row][pos.col] = std::make_optional<Piece>(piece);
+  m_board[pos.row][pos.col] = std::make_optional<Piece>(std::move(piece));
   return true;
 }
 
