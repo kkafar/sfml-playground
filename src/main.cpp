@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
   initChessboard(chessboard, piece_view_registry, texture_store);
   ChessboardView chessboard_view(vm.width, vm.height, texture_store);
 
-  Controller controller(std::move(chessboard_view), std::move(chessboard), std::move(piece_view_registry));
+  Controller controller(std::move(chessboard_view), std::move(chessboard), std::move(piece_view_registry), texture_store);
 
   while (window.isOpen()) {
     sf::Event event;

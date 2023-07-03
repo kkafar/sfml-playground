@@ -23,6 +23,7 @@ PawnMovePolicy::PawnMovePolicy(PlayerKind piece_color)
 
 void PawnMovePolicy::allMoves(const Piece &piece, Chessboard &board,
                               std::vector<Move> &result) {
+  LOG(INFO) << "Calculating move for Pawn";
   BoardPosition crt_pos = piece.position() + m_normal_move_offset;
   if (isPositionInChessboardBounds(crt_pos) && board.isTileEmpty(crt_pos)) {
     result.push_back(Move{crt_pos, Move::Kind::Normal});

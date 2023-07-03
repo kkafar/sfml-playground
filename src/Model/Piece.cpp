@@ -9,9 +9,10 @@
 #include "Model/QueenMovePolicy.hpp"
 #include "Model/RookMovePolicy.hpp"
 #include "PieceKind.hpp"
+#include "glog/logging.h"
 #include <memory>
 
-std::unique_ptr<MovePolicy> movePolicyFactory(PieceKind piece, PlayerKind color) {
+std::unique_ptr<MovePolicy> Piece::movePolicyFactory(PieceKind piece, PlayerKind color) {
   switch (piece) {
     case PieceKind::Pawn:
       return std::make_unique<PawnMovePolicy>(color);
@@ -20,6 +21,7 @@ std::unique_ptr<MovePolicy> movePolicyFactory(PieceKind piece, PlayerKind color)
     case PieceKind::Bishop:
       return std::make_unique<BishopMovePolicy>();
     case PieceKind::Queen:
+      LOG(INFO) << "Returning delegate for queen";
       return std::make_unique<QueenMovePolicy>();
     case PieceKind::King:
       return std::make_unique<KingMovePolicy>(color);

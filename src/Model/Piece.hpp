@@ -5,6 +5,7 @@
 #include "Model/Move.hpp"
 #include "Model/PlayerKind.hpp"
 #include "Model/MovePolicy.hpp"
+#include "Model/QueenMovePolicy.hpp"
 #include "PieceKind.hpp"
 #include "SFML/Config.hpp"
 #include <cstdint>
@@ -20,6 +21,11 @@ public:
   using Kind = PieceKind;
   using Tag = sf::Uint32;
 
+  Piece(const Piece &) = delete;
+  Piece(Piece &&) = default;
+  Piece &operator=(const Piece &) = delete;
+  Piece &operator=(Piece &&) = default;
+
   Piece(const Piece::Color color, const PieceKind kind, const Tag tag);
 
   Piece(const Piece::Color color, const PieceKind kind, const BoardPosition pos, const Tag tag);
@@ -32,7 +38,14 @@ public:
 
   [[nodiscard]] inline BoardPosition position() const noexcept { return m_position; }
 
-  inline void allMoves(Chessboard &board, std::vector<Move> &result) {
+  void setKind(Piece::Kind kind) {
+    LOG(INFO) << "Changing from pawn to queen for piece at " << this;
+    m_kind = kind;
+    m_move_policy_delegate = movePolicyFactory(m_kind, m_color);
+  }
+
+  void allMoves(Chessboard &board, std::vector<Move> &result) {
+    LOG(INFO) << "Calculating moves for piece at " << this;
     m_move_policy_delegate->allMoves(*this, board, result);
     LOG(INFO) << "Moves calculated: " << result.size();
   }
@@ -58,10 +71,13 @@ public:
 private:
   BoardPosition m_position{0, 0};
   bool m_has_moved{false};
-  std::shared_ptr<MovePolicy> m_move_policy_delegate;
+  std::unique_ptr<MovePolicy> m_move_policy_delegate;
   Color m_color;
   PieceKind m_kind;
   Tag m_tag;
+
+
+  static std::unique_ptr<MovePolicy> movePolicyFactory(PieceKind piece, PlayerKind color);
 };
 
 #endif // !__PIECE_HPP__

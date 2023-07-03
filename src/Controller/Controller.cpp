@@ -1,5 +1,6 @@
 #include "Controller.hpp"
 #include "Controller/PieceViewRegistry.hpp"
+#include "Data/TextureStore.hpp"
 #include "Model/BoardPosition.hpp"
 #include "Model/Chessboard.hpp"
 #include "Model/Piece.hpp"
@@ -13,8 +14,8 @@
 #include <optional>
 
 Controller::Controller(ChessboardView &&board_view, Chessboard &&board,
-                       PieceViewRegistry &&pvr)
-    : m_board_view(board_view), m_board(board), m_piece_view_registry(pvr) {
+                       PieceViewRegistry &&pvr, const TextureStore &texture_store)
+    : m_board_view(std::move(board_view)), m_board(std::move(board)), m_piece_view_registry(pvr), m_texture_store(texture_store)  {
   BoardPosition current_position{0, 0};
 
   sf::Vector2u tile_dims = board_view.getTileSize();
@@ -91,6 +92,12 @@ void Controller::performPlayerMove(Piece &piece, const Move &move) {
 
     Piece &rook = m_board.getPieceAt(rook_pos)->get();
     movePiece(rook, Move { target_rook_pos, Move::Kind::Normal });
+  } else if (piece.kind() == Piece::Kind::Pawn && (move.pos.row == 0 || move.pos.row == 7)) {
+    // TODO: Allow player to select piece kind
+    Piece &piece = m_board.getPieceAt(move.pos)->get();
+    piece.setKind(Piece::Kind::Queen);
+    PieceView &view = m_piece_view_registry.viewForTag(piece.tag())->get();
+    view.setTexture(m_texture_store.textureForPiece(piece.color(), piece.kind()));
   }
 }
 
