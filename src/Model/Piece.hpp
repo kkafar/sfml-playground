@@ -17,6 +17,7 @@ class Chessboard;
 class Piece {
 public:
   using Color = PlayerKind;
+  using Kind = PieceKind;
   using Tag = sf::Uint32;
 
   Piece(const Piece::Color color, const PieceKind kind, const Tag tag);
@@ -27,13 +28,17 @@ public:
 
   [[nodiscard]] inline Color color() const noexcept { return m_color; }
 
-  [[nodiscard]] inline PieceKind pieceKind() const noexcept { return m_kind; }
+  [[nodiscard]] inline PieceKind kind() const noexcept { return m_kind; }
 
   [[nodiscard]] inline BoardPosition position() const noexcept { return m_position; }
 
   inline void allMoves(Chessboard &board, std::vector<Move> &result) {
     m_move_policy_delegate->allMoves(*this, board, result);
     LOG(INFO) << "Moves calculated: " << result.size();
+  }
+  
+  void attackMoves(Chessboard &board, std::vector<Move> &result) {
+    m_move_policy_delegate->attackMoves(*this, board, result);
   }
 
   inline void setPosition(const BoardPosition new_pos) noexcept { m_position = new_pos; }

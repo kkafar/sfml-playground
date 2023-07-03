@@ -16,6 +16,11 @@ public:
 
   virtual void allMoves(const Piece &piece, Chessboard &board, std::vector<Move> &result) = 0;
 
+  /// All Moves that COULD BE an attack (but in current board situation they might be normal moves as well).
+  virtual void attackMoves(const Piece &piece, Chessboard &board, std::vector<Move> &result) {
+    allMoves(piece, board, result);
+  }
+
 protected:
   [[nodiscard]] bool isMoveInChessboardBounds(const Move &move);
   [[nodiscard]] bool isPositionInChessboardBounds(const BoardPosition &pos);
