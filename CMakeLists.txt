@@ -34,6 +34,6 @@ add_executable(main ${SRC_FILES})
 target_include_directories(main PUBLIC ${SFML_DIR}/include/ ${GLOG_DIR}/include/ ${SRC_DIR})
 target_link_libraries(main PUBLIC ${SFML_LIBS} ${GLOG_LIB_DIR}/libglog.so)
 
-target_compile_features(main PUBLIC cxx_std_17)
-set_target_properties(main PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+target_compile_features(main PUBLIC cxx_std_20)
+set_target_properties(main PROPERTIES CXX_STANDARD 20 CXX_STANDARD_REQUIRED ON)
 
