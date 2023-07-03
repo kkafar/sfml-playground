@@ -45,6 +45,7 @@ private:
   const static sf::Color s_tint_attack_color;
   const static sf::Color s_tint_move_color;
   const static sf::Color s_tint_blocked_color;
+  const static sf::Color s_tint_castle_color;
 
   std::array<std::array<sf::RectangleShape, WIDTH>, HEIGHT> m_fields;
   std::array<std::array<std::optional<sf::RectangleShape>, WIDTH>, HEIGHT> m_tint_rects;

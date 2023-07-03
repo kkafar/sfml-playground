@@ -4,13 +4,14 @@
 #include "Model/BoardPosition.hpp"
 #include "Model/Chessboard.hpp"
 #include "Model/MovePolicy.hpp"
+#include "Model/PlayerKind.hpp"
 #include "PieceKind.hpp"
 #include "SFML/Config.hpp"
 #include <array>
 
 class KingMovePolicy : public MovePolicy {
 public:
-  KingMovePolicy(const sf::Int32 starting_row);
+  KingMovePolicy(const PlayerKind piece_color);
 
   void allMoves(const Piece &piece, Chessboard &board,
                 std::vector<Move> &result) override;
@@ -22,6 +23,8 @@ private:
       BoardPosition{1, 0},   BoardPosition{1, 1}};
 
   std::array<BoardPosition, 2> m_rook_positions;
+
+  PlayerKind m_color;
 
   bool allEmptyInRowBetweenPositions(const Chessboard &board,
                                 const BoardPosition &pos_1,

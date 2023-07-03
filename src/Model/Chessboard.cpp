@@ -34,7 +34,6 @@ bool Chessboard::insertPieceAt(Piece &&piece, BoardPosition pos) {
     return false;
   }
   piece.setPosition(pos);
-  piece.markAsMoved();
   m_board[pos.row][pos.col] = std::make_optional<Piece>(piece);
   return true;
 }
@@ -51,6 +50,7 @@ bool Chessboard::movePiece(BoardPosition from_pos, BoardPosition to_pos) {
     LOG(ERROR) << "Attempted to remove piece from empty position";
     return false;
   }
+  piece.value().markAsMoved();
 
   return insertPieceAt(std::move(piece.value()), to_pos);
 }

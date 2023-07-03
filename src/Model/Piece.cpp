@@ -22,7 +22,7 @@ std::unique_ptr<MovePolicy> movePolicyFactory(PieceKind piece, PlayerKind color)
     case PieceKind::Queen:
       return std::make_unique<QueenMovePolicy>();
     case PieceKind::King:
-      return std::make_unique<KingMovePolicy>(color == PlayerKind::White ? 0 : 7);
+      return std::make_unique<KingMovePolicy>(color);
     case PieceKind::Knight:
       return std::make_unique<KnightMovePolicy>();
     default:
