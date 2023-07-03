@@ -36,7 +36,7 @@ private:
   sf::Vector2u translateBoardPositionToWindowCoordinates(BoardPosition pos) const;
 
   void focusPiece(Piece &piece);
-  void blurPiece();
+  void blurFocusedPiece();
   void movePiece(Piece &piece, const Move &move);
   void performPlayerMove(Piece &piece, const Move &move);
   

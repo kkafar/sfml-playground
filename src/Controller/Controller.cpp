@@ -58,7 +58,7 @@ void Controller::focusPiece(Piece &piece) {
   }
 }
 
-void Controller::blurPiece() {
+void Controller::blurFocusedPiece() {
   if (!m_focused_piece) {
     return;
   }
@@ -102,7 +102,7 @@ void Controller::movePiece(Piece &piece, const Move &move) {
   sf::Vector2u view_pos = translateBoardPositionToWindowCoordinates(move.pos);
   m_piece_view_registry.viewForTag(piece.tag())->get().setPosition(view_pos.x, view_pos.y);
   
-  blurPiece();
+  blurFocusedPiece();
 }
 
 void Controller::removePiece(Piece &piece) {
@@ -120,9 +120,9 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
   if (m_focused_piece) {
     if (selected_piece) {
       if (selected_piece->get() == m_focused_piece->get()) {
-        blurPiece();
+        blurFocusedPiece();
       } else if (selected_piece->get().color() == m_focused_piece->get().color()) {
-        blurPiece();
+        blurFocusedPiece();
         focusPiece(selected_piece->get());
       } else {
         std::optional<Move> move_opt = positionIsInMoves(selected_pos, m_focused_piece_move_buf);
@@ -138,7 +138,7 @@ void Controller::onMouseClicked(const sf::Event::MouseButtonEvent &event) {
         performPlayerMove(m_focused_piece->get(), move_opt.value());
         togglePlayer();
       } else {
-        blurPiece();
+        blurFocusedPiece();
       }
     }
   } else if (selected_piece) {
