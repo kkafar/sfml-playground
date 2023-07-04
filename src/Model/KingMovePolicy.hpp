@@ -25,7 +25,7 @@ private:
       BoardPosition{1, 0},   BoardPosition{1, 1}};
 
   std::array<BoardPosition, 2> m_rook_positions;
-  std::array<std::array<bool, 8>, 8> m_attash_mesh;
+  std::array<std::array<bool, 8>, 8> m_attack_mesh;
   std::vector<Move> m_enemy_move_buf;
 
   PlayerKind m_color;

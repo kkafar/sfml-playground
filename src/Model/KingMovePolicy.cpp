@@ -109,13 +109,13 @@ bool KingMovePolicy::allEmptyInRowBetweenPositions(const Chessboard &board,
 }
 
 bool KingMovePolicy::isPositionAttacked(const BoardPosition &pos) {
-  return m_attash_mesh[pos.row][pos.col];
+  return m_attack_mesh[pos.row][pos.col];
 }
 
 void KingMovePolicy::resetAttackMesh() {
   for (int32_t i = 0; i < 8; ++i) {
     for (int32_t j = 0; j < 8; ++j) {
-      m_attash_mesh[i][j] = false;
+      m_attack_mesh[i][j] = false;
     }
   }
 }
@@ -141,7 +141,7 @@ void KingMovePolicy::updateAttackMesh(Chessboard &board, const BoardPosition &ki
           LOG(INFO) << "Calculating attack moves for piece at " << piece.position();
           piece.attackMoves(board, m_enemy_move_buf);
           for (const Move &move : m_enemy_move_buf) {
-            m_attash_mesh[move.pos.row][move.pos.col] = true;
+            m_attack_mesh[move.pos.row][move.pos.col] = true;
           }
         }
       }
