@@ -10,9 +10,9 @@ namespace chess {
 class Piece {
 public:
     Piece(const Piece &) = delete;
-    Piece(Piece &&) = delete;
+    Piece(Piece &&) = default;
     Piece &operator=(const Piece &) = delete;
-    Piece &operator=(Piece &&) = delete;
+    Piece &operator=(Piece &&) = default;
 
     explicit Piece(PieceColor color, PieceKind kind) noexcept;
 
