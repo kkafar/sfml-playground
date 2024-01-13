@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.27)
 project(chess_v2 LANGUAGES CXX)
 
 set(CMAKE_BUILD_TYPE DEBUG)
