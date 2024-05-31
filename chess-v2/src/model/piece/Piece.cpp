@@ -23,7 +23,6 @@ namespace chess::model::piece {
     inline void Piece::SetTag(Tag tag) noexcept {
         this->tag_ = tag;
     }
-
 }
 
 

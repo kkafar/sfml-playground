@@ -3,12 +3,13 @@
 //
 
 #include "Application.h"
-
-#include <utility>
-
 #import <glog/logging.h>
+#include "config/ConfigLoader.h"
 
-Application::Application(std::string application_name) : application_name_{std::move(application_name)} {
+
+Application::Application(std::string application_name) :
+        application_name_{std::move(application_name)},
+        config_(ConfigLoader::LoadConfigFromFile("../config.json")) {
     InitLogging();
 }
 

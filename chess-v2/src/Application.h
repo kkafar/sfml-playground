@@ -7,6 +7,7 @@
 
 #include <glog/logging.h>
 #include <SFML/Graphics.hpp>
+#include "config/Config.h"
 
 constexpr sf::Uint32 DEFAULT_WINDOW_WIDTH = 1024;
 constexpr sf::Uint32 DEFAULT_WINDOW_HEIGHT = 1024;
@@ -27,6 +28,7 @@ private:
     void InitViews();
 
     std::string application_name_;
+    Config config_;
 };
 
 
