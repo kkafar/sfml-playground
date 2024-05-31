@@ -25,7 +25,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #add_executable(chess_v2 ${SRC_FILES})
-add_executable(chess_v2 src/main.cpp src/Chessboard.cpp src/Piece.cpp src/PieceColor.cpp src/PieceKind.cpp src/BoardPosition.cpp)
+add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/piece/Piece.cpp src/model/piece/PieceColor.cpp src/model/piece/PieceKind.cpp src/model/board/BoardPosition.cpp)
 
 target_include_directories(chess_v2 PUBLIC ${SFML_DIR}/include/ ${GLOG_DIR}/include/ ${SRC_DIR})
 target_link_directories(chess_v2 PUBLIC ${SFML_LIB_DIR})

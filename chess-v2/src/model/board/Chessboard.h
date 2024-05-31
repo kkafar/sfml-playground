@@ -6,7 +6,7 @@
 #include <memory>
 #include <array>
 #include "BoardPosition.h"
-#include "Piece.h"
+#include "model/piece/Piece.h"
 
 namespace chess {
 
