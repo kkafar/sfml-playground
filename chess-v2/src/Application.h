@@ -23,6 +23,9 @@ public:
 private:
     void InitLogging();
 
+    void InitModel();
+    void InitViews();
+
     std::string application_name_;
 };
 

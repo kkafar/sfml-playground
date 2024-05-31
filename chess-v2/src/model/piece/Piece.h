@@ -3,6 +3,7 @@
 
 #include "PieceColor.h"
 #include "PieceKind.h"
+#include <core/CommonTypes.h>
 
 
 namespace chess::model::piece {
@@ -23,9 +24,13 @@ namespace chess::model::piece {
 
         [[nodiscard]] PieceKind GetKind() const noexcept;
 
+        void SetTag(Tag tag) noexcept;
+        [[nodiscard]] Tag GetTag() const noexcept;
+
     private:
         PieceColor color_;
         PieceKind kind_;
+        Tag tag_;
     };
 
 }

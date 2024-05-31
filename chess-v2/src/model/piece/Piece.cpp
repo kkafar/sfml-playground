@@ -14,6 +14,14 @@ namespace chess::model::piece {
         return this->kind_;
     }
 
+    inline Tag Piece::GetTag() const noexcept {
+        return this->tag_;
+    }
+
+    inline void Piece::SetTag(Tag tag) noexcept {
+        this->tag_ = tag;
+    }
+
 }
 
 
