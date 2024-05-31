@@ -5,27 +5,30 @@
 #include "PieceKind.h"
 
 
-namespace chess {
+namespace chess::model::piece {
 
-class Piece {
-public:
-    Piece(const Piece &) = delete;
-    Piece(Piece &&) = default;
-    Piece &operator=(const Piece &) = delete;
-    Piece &operator=(Piece &&) = default;
+    class Piece {
+    public:
+        Piece(const Piece &) = delete;
 
-    explicit Piece(PieceColor color, PieceKind kind) noexcept;
+        Piece(Piece &&) = default;
 
-    [[nodiscard]] PieceColor GetColor() const noexcept;
-    [[nodiscard]] PieceKind GetKind() const noexcept;
+        Piece &operator=(const Piece &) = delete;
 
-private:
-    PieceColor color_;
-    PieceKind kind_;
-};
+        Piece &operator=(Piece &&) = default;
+
+        explicit Piece(PieceColor color, PieceKind kind) noexcept;
+
+        [[nodiscard]] PieceColor GetColor() const noexcept;
+
+        [[nodiscard]] PieceKind GetKind() const noexcept;
+
+    private:
+        PieceColor color_;
+        PieceKind kind_;
+    };
 
 }
-
 
 
 #endif //CHESS_V2_PIECE_H

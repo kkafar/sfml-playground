@@ -8,10 +8,12 @@
 
 namespace chess {
 
-enum class PieceColor {
-    kBlack,
-    kWhite,
-};
+    enum class PieceColor {
+        kBlack = 0,
+        kWhite,
+        kPieceColorCount,
+    };
+
 
 }
 

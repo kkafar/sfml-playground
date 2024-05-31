@@ -5,19 +5,19 @@
 #ifndef CHESS_V2_PIECEKIND_H
 #define CHESS_V2_PIECEKIND_H
 
-namespace chess {
+namespace chess::model::piece {
 
-enum class PieceKind {
-    kPawn,
-    kBishop,
-    kKing,
-    kKnight,
-    kQueen,
-    kRook,
-};
+    enum class PieceKind {
+        kPawn = 0,
+        kBishop,
+        kKing,
+        kKnight,
+        kQueen,
+        kRook,
+        kPieceKindCount,
+    };
 
 }
-
 
 
 #endif //CHESS_V2_PIECEKIND_H

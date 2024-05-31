@@ -8,23 +8,26 @@
 #include <SFML/Main.hpp>
 #include <ostream>
 
-namespace chess {
+namespace chess::model::board {
 
-struct BoardPosition {
-    sf::Uint32 row;
-    sf::Uint32 col;
+    struct BoardPosition {
+        sf::Uint32 row;
+        sf::Uint32 col;
 
-    friend std::ostream &operator<<(std::ostream &stream, const BoardPosition &pos);
+        friend std::ostream &operator<<(std::ostream &stream, const BoardPosition &pos);
 
-    [[nodiscard]] BoardPosition operator+(const BoardPosition &other) const noexcept;
-    [[nodiscard]] bool operator==(const BoardPosition &other) const noexcept;
-    [[nodiscard]] bool operator!=(const BoardPosition &other) const noexcept;
-    BoardPosition& operator+=(const BoardPosition &other) noexcept;
-    BoardPosition& operator-=(const BoardPosition &other) noexcept;
-};
+        [[nodiscard]] BoardPosition operator+(const BoardPosition &other) const noexcept;
+
+        [[nodiscard]] bool operator==(const BoardPosition &other) const noexcept;
+
+        [[nodiscard]] bool operator!=(const BoardPosition &other) const noexcept;
+
+        BoardPosition &operator+=(const BoardPosition &other) noexcept;
+
+        BoardPosition &operator-=(const BoardPosition &other) noexcept;
+    };
 
 }
-
 
 
 #endif //CHESS_V2_BOARDPOSITION_H
