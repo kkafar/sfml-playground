@@ -4,6 +4,6 @@
 
 #include "PieceColor.h"
 
-namespace chess {
+namespace chess::model::piece {
 
 }

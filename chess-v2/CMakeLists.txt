@@ -12,6 +12,7 @@ set(SFML_DIR ${DEPENDENCIES_DIR}/SFML-2.6.0)
 set(SFML_LIB_DIR ${SFML_DIR}/lib)
 set(GLOG_DIR ${DEPENDENCIES_DIR}/glog-0.6.0)
 set(GLOG_LIB_DIR ${GLOG_DIR}/lib)
+set(RAPIDJSON_DIR ${DEPENDENCIES_DIR}/rapidjson)
 
 #file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS ${SRC_DIR}/*.cpp ${SRC_DIR}/**/*.cpp)
 set(SFML_LIBS
@@ -25,8 +26,25 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #add_executable(chess_v2 ${SRC_FILES})
-add_executable(chess_v2 src/main.cpp src/Chessboard.cpp src/Piece.cpp src/PieceColor.cpp src/PieceKind.cpp src/BoardPosition.cpp)
+add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/piece/Piece.cpp src/model/piece/PieceColor.cpp src/model/piece/PieceKind.cpp src/model/board/BoardPosition.cpp
+        src/Application.cpp
+        src/Application.h
+        src/core/CommonTypes.h
+        src/core/Constants.h
+        src/config/Config.cpp
+        src/config/Config.h
+        src/config/ConfigLoader.cpp
+        src/config/ConfigLoader.h
+)
 
-target_include_directories(chess_v2 PUBLIC ${SFML_DIR}/include/ ${GLOG_DIR}/include/ ${SRC_DIR})
+target_include_directories(
+        chess_v2
+        PUBLIC
+        ${SFML_DIR}/include/
+        ${GLOG_DIR}/include/
+        ${RAPIDJSON_DIR}/include/)
+
+target_include_directories(chess_v2 PUBLIC ${SRC_DIR})
+
 target_link_directories(chess_v2 PUBLIC ${SFML_LIB_DIR})
 target_link_libraries(chess_v2 PUBLIC ${SFML_LIBS} ${GLOG_LIB_DIR}/libglog.so)

@@ -4,6 +4,6 @@
 
 #include "PieceKind.h"
 
-namespace chess {
+namespace chess::model::piece {
 
 }
