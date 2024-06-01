@@ -7,9 +7,9 @@
 
 
 enum ViewType {
-    kView = 0,
-    kViewGroup = 1 << 0,
-    kRootView = (1 << 1) | (kViewGroup),
+    kRegularView = 1 << 1,
+    kViewGroup = 1 << 2,
+    kRootView = (1 << 2) | (kViewGroup),
 };
 
 

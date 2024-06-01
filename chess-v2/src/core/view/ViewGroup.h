@@ -23,6 +23,8 @@ public:
     void AddSubviewAt(View::Shared view, std::size_t index);
     void RemoveSubviewWithTag(Tag tag);
 
+    std::vector<View::Shared> &GetChildren();
+
 private:
     std::vector<View::Shared> children_;
 

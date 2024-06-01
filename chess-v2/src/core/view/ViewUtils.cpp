@@ -5,12 +5,15 @@
 #include "ViewUtils.h"
 #include "ViewType.h"
 
-inline bool ViewUtils::IsViewGroup(const View &view) {
-//    return view.GetViewType() & ViewType::kViewGroup;
-    return false;
+bool ViewUtils::IsViewGroup(const View &view) {
+    return view.GetViewType() & ViewType::kViewGroup;
 }
 
 bool ViewUtils::IsRootView(const View &view) {
-//    return view.GetViewType() & ViewType::kRootView;
-    return true;
+    return view.GetViewType() & ViewType::kRootView;
 }
+
+bool ViewUtils::IsRegularView(const View &view) {
+    return view.GetViewType() & ViewType::kRegularView;
+}
+
