@@ -12,6 +12,7 @@ class ViewUtils {
 public:
     static bool IsViewGroup(const View &view);
     static bool IsRootView(const View &view);
+    static bool IsRegularView(const View &view);
 
 private:
 };

@@ -50,3 +50,7 @@ ViewGroup::ViewGroup(Tag tag, RenderNode::SharedDrawable drawable) :
         ViewParent() {
 
 }
+
+std::vector<View::Shared> &ViewGroup::GetChildren() {
+    return children_;
+}

@@ -13,15 +13,15 @@ void View::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     }
 }
 
-inline ViewParent::Shared View::GetParent() const {
+ViewParent::Shared View::GetParent() const {
     return parent_;
 }
 
-inline void View::SetParent(ViewParent::Shared parent) {
+void View::SetParent(ViewParent::Shared parent) {
     parent_ = std::move(parent);
 }
 
-inline ViewType View::GetViewType() const {
+ViewType View::GetViewType() const {
     return type_;
 }
 

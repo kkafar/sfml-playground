@@ -8,9 +8,14 @@ ViewRegistry::ViewRegistry() : registry_{} {
 
 }
 
-bool ViewRegistry::InsertView(View &&view, Tag tag) {
+bool ViewRegistry::InsertView(Tag tag, View &&view) {
     auto res = registry_.insert({tag, std::make_shared<View>(std::move(view))});
     // Whether the insertion took place or not
+    return res.second;
+}
+
+bool ViewRegistry::InsertView(Tag tag, View::Shared view) {
+    auto res = registry_.insert({tag, std::move(view)});
     return res.second;
 }
 
@@ -25,4 +30,8 @@ View::Shared ViewRegistry::GetView(Tag tag) const {
         return {};
     }
     return entry->second;
+}
+
+std::size_t ViewRegistry::Size() const {
+    return registry_.size();
 }

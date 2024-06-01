@@ -14,11 +14,15 @@ class ViewRegistry {
 public:
     ViewRegistry();
 
-    bool InsertView(View &&view, Tag tag);
+    bool InsertView(Tag tag, View &&view);
+    bool InsertView(Tag tag, View::Shared view);
     bool RemoveView(Tag tag);
 
     [[nodiscard]]
     View::Shared GetView(Tag tag) const;
+
+    [[nodiscard]]
+    std::size_t Size() const;
 
 private:
     std::unordered_map<Tag, View::Shared> registry_;
