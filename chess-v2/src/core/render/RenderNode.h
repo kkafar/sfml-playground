@@ -43,6 +43,8 @@ public:
 
 private:
     SharedDrawable drawable_;
+//    sf::Transformable transformable_;
+
     sf::Transform transform_{sf::Transform::Identity};
 };
 

@@ -54,3 +54,9 @@ ViewGroup::ViewGroup(Tag tag, RenderNode::SharedDrawable drawable) :
 std::vector<View::Shared> &ViewGroup::GetChildren() {
     return children_;
 }
+
+void ViewGroup::OnLayout(sf::Uint32 left, sf::Uint32 top, sf::Uint32 right, sf::Uint32 bottom) {
+    for (auto &child : children_) {
+        child->Layout(left, top, right, bottom);
+    }
+}

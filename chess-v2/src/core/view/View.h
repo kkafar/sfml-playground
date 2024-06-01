@@ -30,7 +30,26 @@ public:
 
     [[nodiscard]] sf::Transform &GetTransform();
 
+    /**
+     * This method is called by the parent on given view.
+     * It should position given view according to given parameters.
+     * You should not attempt to override this method. Override OnLayout instead.
+     */
+    virtual void Layout(sf::Uint32 left, sf::Uint32 top, sf::Uint32 right, sf::Uint32 bottom) final;
+
+    /**
+     * This method is called by Layout method implementation to notify view that it has been layouted.
+     * Here you should layout all your subviews (if applicable) or run any necessary actions in reaction to layout.
+     */
+    virtual void OnLayout(sf::Uint32 left, sf::Uint32 top, sf::Uint32 right, sf::Uint32 bottom);
+
+
 protected:
+    sf::Uint32 left_{0};
+    sf::Uint32 right_{0};
+    sf::Uint32 width_{0};
+    sf::Uint32 height_{0};
+
     std::optional<RenderNode> render_node_;
     ViewParent::Shared parent_;
     ViewType type_;

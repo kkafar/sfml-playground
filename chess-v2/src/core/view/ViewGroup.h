@@ -25,6 +25,8 @@ public:
 
     std::vector<View::Shared> &GetChildren();
 
+    void OnLayout(sf::Uint32 left, sf::Uint32 top, sf::Uint32 right, sf::Uint32 bottom) override;
+
 private:
     std::vector<View::Shared> children_;
 

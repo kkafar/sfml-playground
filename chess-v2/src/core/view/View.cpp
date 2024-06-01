@@ -40,3 +40,20 @@ View::View(Tag tag, ViewType type) :
 sf::Transform &View::GetTransform() {
     return render_node_->GetTransform();
 }
+
+void View::Layout(sf::Uint32 left, sf::Uint32 top, sf::Uint32 right, sf::Uint32 bottom) {
+    if (!render_node_) {
+        OnLayout(left, top, right, bottom);
+        return;
+    }
+
+    // Holy moly, how do I set size of a view???????
+    // TODO: This needs to be figured out.
+    // Currently jjj
+
+    OnLayout(left, top, right, bottom);
+}
+
+void View::OnLayout(sf::Uint32 left, sf::Uint32 top, sf::Uint32 right, sf::Uint32 bottom) {
+
+}
