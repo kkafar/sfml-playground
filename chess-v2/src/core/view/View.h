@@ -20,14 +20,15 @@ public:
 
     View() = delete;
     View(Tag tag, ViewType type);
-    View(Tag tag, ViewType type, sf::Sprite &&sprite);
+    View(Tag tag, ViewType type, RenderNode::SharedDrawable drawable);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    ViewParent::Shared GetParent() const;
+    [[nodiscard]] ViewParent::Shared GetParent() const;
     void SetParent(ViewParent::Shared parent);
     [[nodiscard]] ViewType GetViewType() const;
 
+    [[nodiscard]] sf::Transform &GetTransform();
 
 protected:
     std::optional<RenderNode> render_node_;

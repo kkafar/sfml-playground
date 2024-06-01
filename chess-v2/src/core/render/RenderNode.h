@@ -18,28 +18,32 @@ class RenderNode : public Tagged, public sf::Drawable {
 public:
     using Ref = std::reference_wrapper<RenderNode>;
     using Shared = std::shared_ptr<RenderNode>;
+    using SharedDrawable = std::shared_ptr<sf::Drawable>;
 
     RenderNode() = delete;
 
-    explicit RenderNode(sf::Sprite &&sprite);
+    explicit RenderNode(SharedDrawable drawable);
 
     /// Designated constructor
-    RenderNode(sf::Sprite &&sprite, Tag tag);
+    RenderNode(SharedDrawable drawable, Tag tag);
 
     [[nodiscard("Pure getter")]]
-    sf::Drawable &GetDrawable();
+    SharedDrawable &GetDrawable();
 
     [[nodiscard("Pure getter")]]
-    const sf::Drawable &GetConstDrawable() const;
+    const SharedDrawable &GetConstDrawable() const;
 
-    [[nodiscard("Pure getter")]]
-    sf::Transformable &GetTransformable();
+    [[nodiscard]]
+    sf::Transform &GetTransform();
+
+//    [[nodiscard("Pure getter")]]
+//    sf::Transformable &GetTransformable();
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
-    sf::Sprite sprite_;
-    std::vector<std::shared_ptr<RenderNode>> children_;
+    SharedDrawable drawable_;
+    sf::Transform transform_{sf::Transform::Identity};
 };
 
 

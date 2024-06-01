@@ -5,34 +5,35 @@
 #include "RenderNode.h"
 #include <algorithm>
 
-RenderNode::RenderNode(sf::Sprite &&sprite, Tag tag) :
+RenderNode::RenderNode(RenderNode::SharedDrawable drawable, Tag tag) :
         Tagged{tag},
-        sprite_{std::move(sprite)} {
+        drawable_{std::move(drawable)},
+        transform_{sf::Transform::Identity} {
 
 }
 
-RenderNode::RenderNode(sf::Sprite &&sprite) :
-        RenderNode(std::move(sprite), Tagged::kTagUnset) {
+RenderNode::RenderNode(RenderNode::SharedDrawable drawable) :
+        RenderNode(std::move(drawable), Tagged::kTagUnset) {
 
 }
 
-inline sf::Drawable &RenderNode::GetDrawable() {
-    return sprite_;
+inline RenderNode::SharedDrawable &RenderNode::GetDrawable() {
+    return drawable_;
 }
 
-inline sf::Transformable &RenderNode::GetTransformable() {
-    return sprite_;
-}
+//inline sf::Transformable &RenderNode::GetTransformable() {
+//    return drawable_;
+//}
 
 void RenderNode::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    target.draw(this->GetConstDrawable(), states);
-
-    for (const auto &child: children_) {
-        target.draw(child->GetConstDrawable(), states);
-    }
+    target.draw(*GetConstDrawable(), transform_);
 }
 
-const sf::Drawable &RenderNode::GetConstDrawable() const {
-    return sprite_;
+const RenderNode::SharedDrawable &RenderNode::GetConstDrawable() const {
+    return drawable_;
+}
+
+sf::Transform &RenderNode::GetTransform() {
+    return transform_;
 }
 

@@ -45,8 +45,8 @@ ViewGroup::ViewGroup(Tag tag) : View(tag, ViewType::kViewGroup), ViewParent() {
 
 }
 
-ViewGroup::ViewGroup(Tag tag, sf::Sprite &&sprite) :
-        View(tag, ViewType::kViewGroup, std::move(sprite)),
+ViewGroup::ViewGroup(Tag tag, RenderNode::SharedDrawable drawable) :
+        View(tag, ViewType::kViewGroup, std::move(drawable)),
         ViewParent() {
 
 }

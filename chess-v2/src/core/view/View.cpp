@@ -25,14 +25,18 @@ inline ViewType View::GetViewType() const {
     return type_;
 }
 
-View::View(Tag tag, ViewType type, sf::Sprite &&sprite) :
+View::View(Tag tag, ViewType type, RenderNode::SharedDrawable drawable) :
         Tagged(tag),
         type_{type} {
-    render_node_ = RenderNode(std::move(sprite));
+    render_node_ = RenderNode(std::move(drawable));
 }
 
 View::View(Tag tag, ViewType type) :
         Tagged(tag),
         type_{type} {
     render_node_ = std::nullopt;
+}
+
+sf::Transform &View::GetTransform() {
+    return render_node_->GetTransform();
 }

@@ -14,7 +14,7 @@ public:
 
     ViewGroup() = delete;
     explicit ViewGroup(Tag tag);
-    ViewGroup(Tag tag, sf::Sprite &&sprite);
+    ViewGroup(Tag tag, RenderNode::SharedDrawable drawable);
 
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
