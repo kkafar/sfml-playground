@@ -5,6 +5,7 @@
 #include "Application.h"
 #import <glog/logging.h>
 #include "config/ConfigLoader.h"
+#include <core/view/ViewGroup.h>
 
 
 Application::Application(std::string application_name) :
@@ -25,8 +26,25 @@ void Application::Run() {
 
     window.setFramerateLimit(DEFAULT_FPS);
 
-    sf::Event event{};
+    sf::CircleShape circle(100.f);
+    circle.setFillColor(sf::Color::Blue);
 
+    sf::CircleShape circle_2(300.f);
+    circle.setFillColor(sf::Color::Blue);
+
+    sf::RectangleShape rect({600, 600});
+    rect.setFillColor(sf::Color::Red);
+
+    ViewGroup root{0, std::make_shared<sf::RectangleShape>(std::move(rect))};
+    View view{1, ViewType::kView, std::make_shared<sf::CircleShape>(std::move(circle))};
+    View view_2{1, ViewType::kView, std::make_shared<sf::CircleShape>(std::move(circle_2))};
+
+    root.GetTransform().rotate(45.f);
+
+    root.AddSubview(std::make_shared<View>(std::move(view_2)));
+    root.AddSubview(std::make_shared<View>(std::move(view)));
+
+    sf::Event event{};
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
             switch (event.type) {
@@ -40,6 +58,7 @@ void Application::Run() {
         }
 
         window.clear(sf::Color::Black);
+        window.draw(root);
         window.display();
     }
 }
