@@ -35,6 +35,10 @@ add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/pi
         src/config/Config.h
         src/config/ConfigLoader.cpp
         src/config/ConfigLoader.h
+        src/core/render/RenderNode.cpp
+        src/core/render/RenderNode.h
+        src/core/Tagged.cpp
+        src/core/Tagged.h
 )
 
 target_include_directories(
