@@ -5,6 +5,7 @@
 #include "Application.h"
 #import <glog/logging.h>
 #include "config/ConfigLoader.h"
+#include <core/view/ViewGroup.h>
 
 
 Application::Application(std::string application_name) :
@@ -27,6 +28,12 @@ void Application::Run() {
 
     sf::Event event{};
 
+    ViewGroup root();
+
+    sf::CircleShape circle(100.f);
+    circle.setFillColor(sf::Color::Blue);
+
+
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
             switch (event.type) {
@@ -40,6 +47,7 @@ void Application::Run() {
         }
 
         window.clear(sf::Color::Black);
+        window.draw(circle);
         window.display();
     }
 }

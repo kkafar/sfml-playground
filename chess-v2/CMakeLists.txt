@@ -39,6 +39,19 @@ add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/pi
         src/core/render/RenderNode.h
         src/core/Tagged.cpp
         src/core/Tagged.h
+        src/core/view/View.cpp
+        src/core/view/View.h
+        src/core/view/ViewGroup.cpp
+        src/core/view/ViewGroup.h
+        src/core/view/ViewParent.cpp
+        src/core/view/ViewParent.h
+        src/core/scene/Scene.cpp
+        src/core/scene/Scene.h
+        src/core/scene/ViewRegistry.cpp
+        src/core/scene/ViewRegistry.h
+        src/core/view/ViewUtils.cpp
+        src/core/view/ViewUtils.h
+        src/core/view/ViewType.h
 )
 
 target_include_directories(

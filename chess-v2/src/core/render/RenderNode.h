@@ -14,7 +14,7 @@
 #include <core/CommonTypes.h>
 
 
-class RenderNode : Tagged, sf::Drawable {
+class RenderNode : public Tagged, public sf::Drawable {
 public:
     using Ref = std::reference_wrapper<RenderNode>;
     using Shared = std::shared_ptr<RenderNode>;
@@ -34,17 +34,6 @@ public:
 
     [[nodiscard("Pure getter")]]
     sf::Transformable &GetTransformable();
-
-    [[nodiscard("Pure getter")]]
-    bool IsLeafNode() const;
-
-    void AddChildNode(Shared child);
-
-    void AddChildNode(RenderNode &&child);
-
-    std::optional<Shared> RemoveChildNodeAt(std::size_t index);
-
-    std::optional<Shared> RemoveChildWithTag(Tag tag);
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
