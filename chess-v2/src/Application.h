@@ -18,15 +18,12 @@ class Application final {
 public:
     Application() = delete;
 
-    Application(std::string application_name);
+    explicit Application(std::string application_name);
 
     void Run();
 
 private:
     void InitLogging();
-
-    void InitModel();
-    void InitViews();
 
     std::string application_name_;
     Config config_;

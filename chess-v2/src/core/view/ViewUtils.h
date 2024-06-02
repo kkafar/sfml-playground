@@ -6,7 +6,6 @@
 #define CHESS_V2_VIEWUTILS_H
 
 #include "View.h"
-#include "ViewGroup.h"
 
 class ViewUtils {
 public:

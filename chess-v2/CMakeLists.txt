@@ -44,8 +44,6 @@ add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/pi
         src/core/Tagged.h
         src/core/view/View.cpp
         src/core/view/View.h
-        src/core/view/ViewGroup.cpp
-        src/core/view/ViewGroup.h
         src/core/view/ViewParent.cpp
         src/core/view/ViewParent.h
         src/core/scene/Scene.cpp
@@ -59,6 +57,8 @@ add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/pi
         src/graphics/assets/AssetsManager.h
         src/graphics/assets/PieceImageDescriptor.cpp
         src/graphics/assets/PieceImageDescriptor.h
+        src/core/view/LayoutParams.cpp
+        src/core/view/LayoutParams.h
 )
 
 target_include_directories(

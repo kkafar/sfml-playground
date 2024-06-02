@@ -7,14 +7,14 @@
 
 #include "ViewRegistry.h"
 #include <cassert>
-#include <core/view/ViewGroup.h>
+#include <core/view/View.h>
 #include <core/view/ViewUtils.h>
 
 class Scene : public sf::Drawable {
 public:
     Scene();
 
-    void AddViewHierarchy(ViewGroup::Shared root);
+    void AddViewHierarchy(View::Shared root);
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

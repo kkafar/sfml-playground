@@ -14,7 +14,7 @@
 #include <core/CommonTypes.h>
 
 
-class RenderNode : public Tagged, public sf::Drawable, public sf::Transformable {
+class RenderNode : public sf::Drawable, public sf::Transformable {
 public:
     using Ref = std::reference_wrapper<RenderNode>;
     using Shared = std::shared_ptr<RenderNode>;
@@ -23,9 +23,6 @@ public:
     RenderNode() = delete;
 
     explicit RenderNode(SharedDrawable drawable);
-
-    /// Designated constructor
-    RenderNode(SharedDrawable drawable, Tag tag);
 
     [[nodiscard("Pure getter")]]
     SharedDrawable &GetDrawable();
@@ -43,6 +40,7 @@ public:
 
 private:
     SharedDrawable drawable_;
+    sf::FloatRect frame_;
 };
 
 

@@ -5,14 +5,8 @@
 #include "RenderNode.h"
 #include <algorithm>
 
-RenderNode::RenderNode(RenderNode::SharedDrawable drawable, Tag tag) :
-        Tagged{tag},
-        drawable_{std::move(drawable)} {
-
-}
-
 RenderNode::RenderNode(RenderNode::SharedDrawable drawable) :
-        RenderNode(std::move(drawable), Tagged::kTagUnset) {
+        drawable_{std::move(drawable)} {
 
 }
 
