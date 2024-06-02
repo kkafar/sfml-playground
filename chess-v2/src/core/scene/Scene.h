@@ -28,7 +28,7 @@ private:
 
 
     ViewRegistry view_registry_;
-    ViewGroup::Shared root_view_{nullptr};
+    View::Shared root_view_{nullptr};
 };
 
 

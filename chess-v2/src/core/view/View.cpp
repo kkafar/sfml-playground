@@ -23,19 +23,13 @@ void View::SetParent(ViewParent::Weak parent) {
     parent_ = std::move(parent);
 }
 
-ViewType View::GetViewType() const {
-    return type_;
-}
-
-View::View(ViewType type, Tag tag, RenderNode::SharedDrawable drawable) :
-        Tagged(tag),
-        type_{type} {
+View::View(Tag tag, RenderNode::SharedDrawable drawable) :
+        Tagged(tag) {
     render_node_ = RenderNode(std::move(drawable));
 }
 
-View::View(ViewType type, Tag tag) :
-        Tagged(tag),
-        type_{type} {
+View::View(Tag tag) :
+        Tagged(tag) {
     render_node_ = std::nullopt;
 }
 
@@ -68,7 +62,7 @@ void View::OnLayout(sf::FloatRect frame) {
 
 }
 
-View::View(ViewType type) : type_{type} {
+View::View() {
 
 }
 

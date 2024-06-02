@@ -37,9 +37,9 @@ void Application::Run() {
     sf::RectangleShape rect({600, 600});
     rect.setFillColor(sf::Color::Red);
 
-    View root{ViewType::kViewGroup, 0, std::make_shared<sf::RectangleShape>(std::move(rect))};
-    View view{ViewType::kRegularView, 1, std::make_shared<sf::CircleShape>(std::move(circle))};
-    View view_2{ViewType::kRegularView, 1, std::make_shared<sf::CircleShape>(std::move(circle_2))};
+    View root{0, std::make_shared<sf::RectangleShape>(std::move(rect))};
+    View view{1, std::make_shared<sf::CircleShape>(std::move(circle))};
+    View view_2{1, std::make_shared<sf::CircleShape>(std::move(circle_2))};
 
     root.AddSubview(std::make_shared<View>(std::move(view)));
     root.AddSubview(std::make_shared<View>(std::move(view_2)));

@@ -15,10 +15,9 @@ public:
     using Unique = std::unique_ptr<View>;
     using ChildContainer = std::vector<Shared>;
 
-    View() = delete;
-    View(ViewType type);
-    View(ViewType type, Tag tag);
-    View(ViewType type, Tag tag, RenderNode::SharedDrawable drawable);
+    View();
+    explicit View(Tag tag);
+    View(Tag tag, RenderNode::SharedDrawable drawable);
 
 public: // Drawing
 
@@ -63,18 +62,11 @@ public: // Layout & Measurement
 
     LayoutParams &GetLayoutParams();
 
-public: // Misc
-
-    [[deprecated("ViewGroup will be removed")]]
-    [[nodiscard]]
-    ViewType GetViewType() const;
-
 protected:
     std::vector<Shared> children_;
     sf::FloatRect frame_{0, 0, 0, 0};
     std::optional<RenderNode> render_node_{};
     ViewParent::Shared parent_;
-    ViewType type_;
     LayoutParams layoutParams_{{0, 0}, LayoutParams::Mode::kUnspecified};
 };
 
