@@ -11,19 +11,24 @@ namespace fs = std::filesystem;
 
 class Config {
 public:
-    Config() = delete;
+    Config() = default;
     Config(const Config &) = default;
     Config(Config &&) = default;
-    Config(fs::path assets_directory);
 
     Config &operator=(const Config &) = default;
     Config &operator=(Config &&) = default;
 
 
-    [[nodiscard]] fs::path GetAssetsDirectory();
+    [[nodiscard]] const fs::path &GetAssetsDirectory();
+    [[nodiscard]] const fs::path &GetImagesDirectory();
+    [[nodiscard]] const fs::path &GetFontsDirectory();
 
 private:
-    fs::path assets_path_;
+    friend class ConfigLoader;
+
+    fs::path assets_path_{};
+    fs::path images_path_{};
+    fs::path fonts_path_{};
 };
 
 

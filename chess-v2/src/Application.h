@@ -8,6 +8,7 @@
 #include <glog/logging.h>
 #include <SFML/Graphics.hpp>
 #include "config/Config.h"
+#include <graphics/assets/AssetsManager.h>
 
 constexpr sf::Uint32 DEFAULT_WINDOW_WIDTH = 1024;
 constexpr sf::Uint32 DEFAULT_WINDOW_HEIGHT = 1024;
@@ -29,6 +30,7 @@ private:
 
     std::string application_name_;
     Config config_;
+    AssetsManager assets_manager_{};
 };
 
 

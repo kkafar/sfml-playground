@@ -1,7 +1,3 @@
-//
-// Created by kkafara on 5/31/24.
-//
-
 #include "ConfigLoader.h"
 
 #include <cstdio>
@@ -37,7 +33,7 @@ private:
     bool open_success_{false};
 };
 
-Config ConfigLoader::LoadConfigFromFile(fs::path config_path) {
+Config ConfigLoader::LoadConfigFromFile(const fs::path &config_path) {
     FileRAIIContainer fileContainer(config_path);
     assert(fileContainer.IsValid());
 
@@ -49,7 +45,20 @@ Config ConfigLoader::LoadConfigFromFile(fs::path config_path) {
 
     assert(document.HasMember("assetsDir"));
     assert(document["assetsDir"].GetType() == Type::kStringType);
-    auto assets_dir = fs::path(document["assetsDir"].GetString());
 
-    return {assets_dir};
+    assert(document.HasMember("imagesDir"));
+    assert(document["imagesDir"].GetType() == Type::kStringType);
+
+    assert(document.HasMember("fontsDir"));
+    assert(document["fontsDir"].GetType() == Type::kStringType);
+
+    auto assets_dir = fs::path(document["assetsDir"].GetString());
+    auto images_dir = fs::path(document["imagesDir"].GetString());
+    auto fonts_dir = fs::path(document["fontsDir"].GetString());
+
+    Config config{};
+    config.assets_path_ = std::move(assets_dir);
+    config.images_path_ = std::move(images_dir);
+    config.fonts_path_ = std::move(fonts_dir);
+    return config;
 }

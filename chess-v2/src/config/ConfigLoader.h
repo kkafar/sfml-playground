@@ -17,7 +17,7 @@ public:
     ConfigLoader(ConfigLoader &&) = delete;
 
     [[nodiscard("Config should not be discarded")]]
-    static Config LoadConfigFromFile(fs::path config_path);
+    static Config LoadConfigFromFile(const fs::path &config_path);
 
 private:
 };

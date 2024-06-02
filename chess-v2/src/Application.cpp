@@ -11,8 +11,9 @@
 
 Application::Application(std::string application_name) :
         application_name_{std::move(application_name)},
-        config_(ConfigLoader::LoadConfigFromFile("../config.json")) {
+        config_(ConfigLoader::LoadConfigFromFile("config.json")) {
     InitLogging();
+    assets_manager_.LoadAssetsFromDirectory(config_.GetImagesDirectory());
 }
 
 void Application::InitLogging() {
