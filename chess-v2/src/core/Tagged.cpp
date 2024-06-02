@@ -10,7 +10,7 @@ Tagged::Tagged() : tag_{Tagged::kTagUnset} {
 Tagged::Tagged(Tag tag) : tag_{tag} {
 }
 
-inline Tag Tagged::GetTag() const {
+Tag Tagged::GetTag() const {
     return tag_;
 }
 

@@ -6,13 +6,16 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_MESSAGE_LOG_LEVEL DEBUG)
 
 set(SRC_DIR src)
-set(DEPENDENCIES_DIR /home/kkafara/software/dependencies)
 
+# Yeah I know this is extremely bad, but this project is just for me.
+# TODO: Install these packages via find_package / create download scripts / bundle deps with the project.
+set(DEPENDENCIES_DIR /home/kkafara/software/dependencies)
 set(SFML_DIR ${DEPENDENCIES_DIR}/SFML-2.6.0)
 set(SFML_LIB_DIR ${SFML_DIR}/lib)
 set(GLOG_DIR ${DEPENDENCIES_DIR}/glog-0.6.0)
 set(GLOG_LIB_DIR ${GLOG_DIR}/lib)
 set(RAPIDJSON_DIR ${DEPENDENCIES_DIR}/rapidjson)
+set(FROZEN_DIR ${DEPENDENCIES_DIR}/frozen)
 
 #file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS ${SRC_DIR}/*.cpp ${SRC_DIR}/**/*.cpp)
 set(SFML_LIBS
@@ -22,11 +25,11 @@ set(SFML_LIBS
     ${SFML_LIB_DIR}/libsfml-system.so
 )
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #add_executable(chess_v2 ${SRC_FILES})
-add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/piece/Piece.cpp src/model/piece/PieceColor.cpp src/model/piece/PieceKind.cpp src/model/board/BoardPosition.cpp
+add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/piece/Piece.cpp src/model/board/BoardPosition.cpp
         src/Application.cpp
         src/Application.h
         src/core/CommonTypes.h
@@ -41,8 +44,6 @@ add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/pi
         src/core/Tagged.h
         src/core/view/View.cpp
         src/core/view/View.h
-        src/core/view/ViewGroup.cpp
-        src/core/view/ViewGroup.h
         src/core/view/ViewParent.cpp
         src/core/view/ViewParent.h
         src/core/scene/Scene.cpp
@@ -52,6 +53,12 @@ add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/pi
         src/core/view/ViewUtils.cpp
         src/core/view/ViewUtils.h
         src/core/view/ViewType.h
+        src/graphics/assets/AssetsManager.cpp
+        src/graphics/assets/AssetsManager.h
+        src/graphics/assets/PieceImageDescriptor.cpp
+        src/graphics/assets/PieceImageDescriptor.h
+        src/core/view/LayoutParams.cpp
+        src/core/view/LayoutParams.h
 )
 
 target_include_directories(
@@ -59,7 +66,8 @@ target_include_directories(
         PUBLIC
         ${SFML_DIR}/include/
         ${GLOG_DIR}/include/
-        ${RAPIDJSON_DIR}/include/)
+        ${RAPIDJSON_DIR}/include/
+        ${FROZEN_DIR}/include/)
 
 target_include_directories(chess_v2 PUBLIC ${SRC_DIR})
 

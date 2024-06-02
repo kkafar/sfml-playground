@@ -4,9 +4,14 @@
 
 #include "Config.h"
 
-Config::Config(fs::path assets_directory) :
-        assets_path_{std::move(assets_directory)} {}
-
-inline fs::path Config::GetAssetsDirectory() {
+const fs::path & Config::GetAssetsDirectory() {
     return assets_path_;
+}
+
+const fs::path &Config::GetImagesDirectory() {
+    return images_path_;
+}
+
+const fs::path &Config::GetFontsDirectory() {
+    return fonts_path_;
 }

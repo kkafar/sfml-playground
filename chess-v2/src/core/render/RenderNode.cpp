@@ -5,15 +5,8 @@
 #include "RenderNode.h"
 #include <algorithm>
 
-RenderNode::RenderNode(RenderNode::SharedDrawable drawable, Tag tag) :
-        Tagged{tag},
-        drawable_{std::move(drawable)},
-        transform_{sf::Transform::Identity} {
-
-}
-
 RenderNode::RenderNode(RenderNode::SharedDrawable drawable) :
-        RenderNode(std::move(drawable), Tagged::kTagUnset) {
+        drawable_{std::move(drawable)} {
 
 }
 
@@ -26,14 +19,14 @@ inline RenderNode::SharedDrawable &RenderNode::GetDrawable() {
 //}
 
 void RenderNode::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    target.draw(*GetConstDrawable(), transform_);
+    target.draw(*GetConstDrawable(), states.transform * getTransform());
 }
 
 const RenderNode::SharedDrawable &RenderNode::GetConstDrawable() const {
     return drawable_;
 }
 
-sf::Transform &RenderNode::GetTransform() {
-    return transform_;
-}
+//sf::Transform &RenderNode::GetTransform() {
+//    return transform_;
+//}
 

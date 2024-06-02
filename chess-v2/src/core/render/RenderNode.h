@@ -14,7 +14,7 @@
 #include <core/CommonTypes.h>
 
 
-class RenderNode : public Tagged, public sf::Drawable {
+class RenderNode : public sf::Drawable, public sf::Transformable {
 public:
     using Ref = std::reference_wrapper<RenderNode>;
     using Shared = std::shared_ptr<RenderNode>;
@@ -24,17 +24,14 @@ public:
 
     explicit RenderNode(SharedDrawable drawable);
 
-    /// Designated constructor
-    RenderNode(SharedDrawable drawable, Tag tag);
-
     [[nodiscard("Pure getter")]]
     SharedDrawable &GetDrawable();
 
     [[nodiscard("Pure getter")]]
     const SharedDrawable &GetConstDrawable() const;
 
-    [[nodiscard]]
-    sf::Transform &GetTransform();
+//    [[nodiscard]]
+//    sf::Transform &GetTransform();
 
 //    [[nodiscard("Pure getter")]]
 //    sf::Transformable &GetTransformable();
@@ -43,7 +40,7 @@ public:
 
 private:
     SharedDrawable drawable_;
-    sf::Transform transform_{sf::Transform::Identity};
+    sf::FloatRect frame_;
 };
 
 

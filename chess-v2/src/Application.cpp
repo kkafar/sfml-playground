@@ -5,14 +5,15 @@
 #include "Application.h"
 #import <glog/logging.h>
 #include "config/ConfigLoader.h"
-#include <core/view/ViewGroup.h>
+#include <core/view/View.h>
 #include <core/scene/Scene.h>
 
 
 Application::Application(std::string application_name) :
         application_name_{std::move(application_name)},
-        config_(ConfigLoader::LoadConfigFromFile("../config.json")) {
+        config_(ConfigLoader::LoadConfigFromFile("config.json")) {
     InitLogging();
+    assets_manager_.LoadAssetsFromDirectory(config_.GetImagesDirectory());
 }
 
 void Application::InitLogging() {
@@ -36,15 +37,15 @@ void Application::Run() {
     sf::RectangleShape rect({600, 600});
     rect.setFillColor(sf::Color::Red);
 
-    ViewGroup root{0, std::make_shared<sf::RectangleShape>(std::move(rect))};
-    View view{1, ViewType::kRegularView, std::make_shared<sf::CircleShape>(std::move(circle))};
-    View view_2{1, ViewType::kRegularView, std::make_shared<sf::CircleShape>(std::move(circle_2))};
+    View root{0, std::make_shared<sf::RectangleShape>(std::move(rect))};
+    View view{1, std::make_shared<sf::CircleShape>(std::move(circle))};
+    View view_2{1, std::make_shared<sf::CircleShape>(std::move(circle_2))};
 
     root.AddSubview(std::make_shared<View>(std::move(view)));
     root.AddSubview(std::make_shared<View>(std::move(view_2)));
 
     Scene scene{};
-    scene.AddViewHierarchy(std::make_shared<ViewGroup>(std::move(root)));
+    scene.AddViewHierarchy(std::make_shared<View>(std::move(root)));
 
     sf::Event event{};
     while (window.isOpen()) {

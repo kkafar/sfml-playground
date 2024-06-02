@@ -10,6 +10,7 @@
 class ViewParent {
 public:
     using Shared = std::shared_ptr<ViewParent>;
+    using Weak = std::shared_ptr<ViewParent>;
     using Ref = std::reference_wrapper<ViewParent>;
 
     ViewParent();

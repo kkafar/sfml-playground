@@ -6,13 +6,9 @@
 #define CHESS_V2_VIEWUTILS_H
 
 #include "View.h"
-#include "ViewGroup.h"
 
 class ViewUtils {
 public:
-    static bool IsViewGroup(const View &view);
-    static bool IsRootView(const View &view);
-    static bool IsRegularView(const View &view);
 
 private:
 };
