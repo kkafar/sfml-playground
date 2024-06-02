@@ -37,9 +37,9 @@ View::View(Tag tag, ViewType type) :
     render_node_ = std::nullopt;
 }
 
-sf::Transform &View::GetTransform() {
-    return render_node_->GetTransform();
-}
+//sf::Transform &View::GetTransform() {
+//    return render_node_->getTransform();
+//}
 
 void View::Layout(sf::Uint32 left, sf::Uint32 top, sf::Uint32 right, sf::Uint32 bottom) {
     if (!render_node_) {

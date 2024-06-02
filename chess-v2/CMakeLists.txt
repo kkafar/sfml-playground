@@ -22,11 +22,11 @@ set(SFML_LIBS
     ${SFML_LIB_DIR}/libsfml-system.so
 )
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #add_executable(chess_v2 ${SRC_FILES})
-add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/piece/Piece.cpp src/model/piece/PieceColor.cpp src/model/piece/PieceKind.cpp src/model/board/BoardPosition.cpp
+add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/piece/Piece.cpp src/model/board/BoardPosition.cpp
         src/Application.cpp
         src/Application.h
         src/core/CommonTypes.h
@@ -52,6 +52,8 @@ add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/pi
         src/core/view/ViewUtils.cpp
         src/core/view/ViewUtils.h
         src/core/view/ViewType.h
+        src/graphics/texture/TextureManager.cpp
+        src/graphics/texture/TextureManager.h
 )
 
 target_include_directories(

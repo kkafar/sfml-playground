@@ -28,7 +28,7 @@ public:
     void SetParent(ViewParent::Shared parent);
     [[nodiscard]] ViewType GetViewType() const;
 
-    [[nodiscard]] sf::Transform &GetTransform();
+//    [[nodiscard]] sf::Transform &GetTransform();
 
     /**
      * This method is called by the parent on given view.

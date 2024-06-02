@@ -1,3 +1,5 @@
 {
-  "assetsDir": "assets"
+  "assetsDir": "assets",
+  "imagesDir": "assets/images",
+  "fontsDir": "assets/fonts"
 }

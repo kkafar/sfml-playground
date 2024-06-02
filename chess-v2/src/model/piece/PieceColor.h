@@ -6,16 +6,10 @@
 #define CHESS_V2_PIECECOLOR_H
 
 
-namespace chess {
-
-    enum class PieceColor {
-        kBlack = 0,
-        kWhite,
-        kPieceColorCount,
-    };
-
-
-}
-
+enum class PieceColor {
+    kBlack = 0,
+    kWhite,
+    kPieceColorCount,
+};
 
 #endif //CHESS_V2_PIECECOLOR_H
