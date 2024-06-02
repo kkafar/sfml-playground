@@ -29,7 +29,8 @@ public: // Drawing
 
 public: // View hierarchy relationship management
 
-    [[nodiscard]] ViewParent::Shared GetParent() const;
+    [[nodiscard]]
+    ViewParent::Shared GetParent() const;
 
     void SetParent(ViewParent::Weak parent);
 
@@ -61,6 +62,10 @@ public: // Layout & Measurement
 
 
     LayoutParams &GetLayoutParams();
+
+protected: // Subclass flexibility
+
+//    void SetRenderNode()
 
 protected:
     std::vector<Shared> children_;
