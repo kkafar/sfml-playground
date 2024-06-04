@@ -1,11 +1,7 @@
-//
-// Created by kkafara on 6/1/24.
-//
-
 #include "Scene.h"
 #include <glog/logging.h>
 
-Scene::Scene() : view_registry_{} {
+Scene::Scene() {
 
 }
 
@@ -41,4 +37,8 @@ void Scene::AddViewHierarchy(View::Shared root) {
     InitializeViewHierarchyWithTags(root, 0);
     root_view_ = std::move(root);
     LOG(INFO) << "Registered " << view_registry_.Size() << " views in view registry\n";
+}
+
+View::Shared &Scene::GetRootViewRef() {
+    return root_view_;
 }
