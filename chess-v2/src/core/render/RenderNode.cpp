@@ -19,7 +19,10 @@ inline RenderNode::SharedDrawable &RenderNode::GetDrawable() {
 //}
 
 void RenderNode::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    target.draw(*GetConstDrawable(), states.transform * getTransform());
+    if (drawable_ == nullptr) {
+        return;
+    }
+    target.draw(*drawable_, states.transform * getTransform());
 }
 
 const RenderNode::SharedDrawable &RenderNode::GetConstDrawable() const {

@@ -1,65 +1,67 @@
 #include "View.h"
-#include "ViewType.h"
-
 #include <utility>
+#include <glog/logging.h>
+
+///////////////////////////////////////////////////////////////
+/// Ctors
+///////////////////////////////////////////////////////////////
+
+View::View(LayoutParams params) : Tagged(Tagged::kTagUnset), layoutParams_(params) {
+}
+
+View::View(LayoutParams params, RenderNode::SharedDrawable drawable) : Tagged(Tagged::kTagUnset),
+                                                                       layoutParams_(params),
+                                                                       render_node_{std::make_shared<RenderNode>(
+                                                                               std::move(drawable))} {
+}
+
+///////////////////////////////////////////////////////////////
+/// Drawing
+///////////////////////////////////////////////////////////////
 
 void View::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     // First draw myself
-    if (render_node_) {
-        target.draw(render_node_.value(), states);
-    }
+    states.transform *= getTransform();
+    target.draw(render_node_, states);
 
     // Draw children
-    for (auto &child : children_) {
+    for (auto &child: children_) {
         child->draw(target, states);
     }
 }
 
-ViewParent::Shared View::GetParent() const {
-    return parent_;
-}
+///////////////////////////////////////////////////////////////
+/// Layout
+///////////////////////////////////////////////////////////////
 
-void View::SetParent(ViewParent::Weak parent) {
-    parent_ = std::move(parent);
-}
-
-View::View(Tag tag, RenderNode::SharedDrawable drawable) :
-        Tagged(tag) {
-    render_node_ = RenderNode(std::move(drawable));
-}
-
-View::View(Tag tag) :
-        Tagged(tag) {
-    render_node_ = std::nullopt;
-}
-
-//sf::Transform &View::GetTransform() {
-//    return render_node_->getTransform();
-//}
-
-void View::Layout(const sf::FloatRect frame) {
-    if (frame_ == frame) {
+void View::Layout(const Frame frame) {
+    if (!layout_invalidated_ || frame_ == frame) {
         return;
     }
+
+    LOG(INFO) << "LAYOUT";
     frame_ = frame;
 
-    if (!render_node_) {
-        OnLayout(frame);
-        return;
-    }
+//    if (!render_node_) {
+//        OnLayout(frame);
+//        return;
+//    }
 
     // Holy moly, how do I set size of a view???????
     // TODO: This needs to be figured out.
     // Currently jjj
 
-    auto &render_node = render_node_.value();
+    auto &render_node = render_node_;
     render_node.setPosition(frame_.left, frame_.top);
 
     OnLayout(frame);
+    layout_invalidated_ = false;
 }
 
 void View::OnLayout(sf::FloatRect frame) {
-
+    for (auto &child : children_) {
+        child->Layout(frame);
+    }
 }
 
 View::View() {
@@ -70,8 +72,13 @@ LayoutParams &View::GetLayoutParams() {
     return layoutParams_;
 }
 
+void View::InvalidateLayout() {
+    layout_invalidated_ = true;
+}
 
-// View hierarchy relationship management
+///////////////////////////////////////////////////////////////
+/// View hierarchy relationship management
+///////////////////////////////////////////////////////////////
 
 void View::AddSubview(View::Shared subview) {
     children_.push_back(std::move(subview));
@@ -105,3 +112,21 @@ View::ChildContainer &View::GetChildren() {
 bool View::IsLeaf() const {
     return children_.empty();
 }
+
+View::Shared View::GetParent() const {
+    return parent_;
+}
+
+void View::SetParent(View::Weak parent) {
+    parent_ = parent.lock();
+}
+
+void View::SetRenderNode(RenderNode &&node) {
+    render_node_ = {std::move(node)};
+}
+
+
+//RenderNode &View::GetRenderNode() {
+//    return render_node_;
+//}
+

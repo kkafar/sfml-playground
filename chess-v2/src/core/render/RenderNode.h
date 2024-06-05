@@ -1,7 +1,3 @@
-//
-// Created by kkafara on 6/1/24.
-//
-
 #ifndef CHESS_V2_RENDERNODE_H
 #define CHESS_V2_RENDERNODE_H
 
@@ -20,7 +16,7 @@ public:
     using Shared = std::shared_ptr<RenderNode>;
     using SharedDrawable = std::shared_ptr<sf::Drawable>;
 
-    RenderNode() = delete;
+    RenderNode() = default;
 
     explicit RenderNode(SharedDrawable drawable);
 
@@ -39,8 +35,8 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
-    SharedDrawable drawable_;
-    sf::FloatRect frame_;
+    SharedDrawable drawable_{nullptr};
+    sf::FloatRect frame_{0, 0, 0, 0};
 };
 
 

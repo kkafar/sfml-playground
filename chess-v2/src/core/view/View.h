@@ -4,20 +4,19 @@
 #include <optional>
 #include <SFML/Graphics.hpp>
 #include <core/render/RenderNode.h>
-#include "ViewParent.h"
-#include "ViewType.h"
-#include "LayoutParams.h"
+#include "LayoutCommons.h"
 
-class View : public Tagged, public sf::Drawable {
+class View : public Tagged, public sf::Drawable, public sf::Transformable {
 public:
     using Ref = std::reference_wrapper<View>;
     using Shared = std::shared_ptr<View>;
     using Unique = std::unique_ptr<View>;
+    using Weak = std::weak_ptr<View>;
     using ChildContainer = std::vector<Shared>;
 
     View();
-    explicit View(Tag tag);
-    View(Tag tag, RenderNode::SharedDrawable drawable);
+    explicit View(LayoutParams params);
+    View(LayoutParams params, RenderNode::SharedDrawable drawable);
 
 public: // Drawing
 
@@ -30,9 +29,9 @@ public: // Drawing
 public: // View hierarchy relationship management
 
     [[nodiscard]]
-    ViewParent::Shared GetParent() const;
+    View::Shared GetParent() const;
 
-    void SetParent(ViewParent::Weak parent);
+    void SetParent(View::Weak parent);
 
     void AddSubview(Shared subview);
 
@@ -52,27 +51,35 @@ public: // Layout & Measurement
      * It should position given view according to given parameters.
      * You should not attempt to override this method. Override OnLayout instead.
      */
-    virtual void Layout(sf::FloatRect frame) final;
+    virtual void Layout(Frame frame) final;
 
     /**
      * This method is called by Layout method implementation to notify view that it has been layouted.
      * Here you should layout all your subviews (if applicable) or run any necessary actions in reaction to layout.
+     * Base implementation does forward Layout call that it received to all of the subviews.
      */
-    virtual void OnLayout(sf::FloatRect frame);
-
+    virtual void OnLayout(Frame frame);
 
     LayoutParams &GetLayoutParams();
 
+    void InvalidateLayout();
+
+public: // API for animations
+
 protected: // Subclass flexibility
 
-//    void SetRenderNode()
+//    [[nodiscard]]
+//    RenderNode &GetRenderNode();
+
+    void SetRenderNode(RenderNode &&node);
 
 protected:
-    std::vector<Shared> children_;
-    sf::FloatRect frame_{0, 0, 0, 0};
-    std::optional<RenderNode> render_node_{};
-    ViewParent::Shared parent_;
-    LayoutParams layoutParams_{{0, 0}, LayoutParams::Mode::kUnspecified};
+    std::vector<Shared> children_{};
+    Frame frame_{0, 0, 0, 0};
+    RenderNode render_node_{};
+    View::Shared parent_{nullptr};
+    LayoutParams layoutParams_{};
+    bool layout_invalidated_{true};
 };
 
 

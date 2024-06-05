@@ -1,7 +1,3 @@
-//
-// Created by kkafara on 6/1/24.
-//
-
 #ifndef CHESS_V2_SCENE_H
 #define CHESS_V2_SCENE_H
 
@@ -15,6 +11,7 @@ public:
     Scene();
 
     void AddViewHierarchy(View::Shared root);
+    View::Shared &GetRootViewRef();
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
@@ -27,7 +24,7 @@ private:
     Tag InitializeViewHierarchyWithTags(const View::Shared &root, Tag current_tag);
 
 
-    ViewRegistry view_registry_;
+    ViewRegistry view_registry_{};
     View::Shared root_view_{nullptr};
 };
 

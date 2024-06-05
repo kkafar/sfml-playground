@@ -44,21 +44,30 @@ add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/pi
         src/core/Tagged.h
         src/core/view/View.cpp
         src/core/view/View.h
-        src/core/view/ViewParent.cpp
-        src/core/view/ViewParent.h
         src/core/scene/Scene.cpp
         src/core/scene/Scene.h
         src/core/scene/ViewRegistry.cpp
         src/core/scene/ViewRegistry.h
         src/core/view/ViewUtils.cpp
         src/core/view/ViewUtils.h
-        src/core/view/ViewType.h
         src/graphics/assets/AssetsManager.cpp
         src/graphics/assets/AssetsManager.h
         src/graphics/assets/PieceImageDescriptor.cpp
         src/graphics/assets/PieceImageDescriptor.h
-        src/core/view/LayoutParams.cpp
-        src/core/view/LayoutParams.h
+        src/core/view/LayoutCommons.cpp
+        src/core/view/LayoutCommons.h
+        src/core/animation/AnimationDriver.cpp
+        src/core/animation/AnimationDriver.h
+        src/core/animation/Interpolator.cpp
+        src/core/animation/Interpolator.h
+        src/core/animation/Animation.cpp
+        src/core/animation/Animation.h
+        src/core/animation/RotateAnimation.cpp
+        src/core/animation/RotateAnimation.h
+        src/core/animation/AnimationDriverVisitor.cpp
+        src/core/animation/AnimationDriverVisitor.h
+        src/core/animation/PositionAnimation.cpp
+        src/core/animation/PositionAnimation.h
 )
 
 target_include_directories(
