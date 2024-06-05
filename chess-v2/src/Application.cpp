@@ -5,6 +5,7 @@
 #include <core/scene/Scene.h>
 #include <core/animation/AnimationDriver.h>
 #include <core/animation/RotateAnimation.h>
+#include <core/animation/PositionAnimation.h>
 
 
 Application::Application(std::string application_name) :
@@ -32,7 +33,7 @@ void Application::Run() {
     auto circle_2 = std::make_shared<sf::CircleShape>(300.f);
     circle_2->setFillColor(sf::Color::White);
 
-    auto rectangle = std::make_shared<sf::RectangleShape>(sf::Vector2f {600, 600});
+    auto rectangle = std::make_shared<sf::RectangleShape>(sf::Vector2f{600, 600});
     rectangle->setFillColor(sf::Color::Red);
 
     LayoutParams params{{600, 600}, LayoutParams::Mode::kWrapContent, LayoutParams::Mode::kWrapContent};
@@ -53,10 +54,19 @@ void Application::Run() {
 
     root->setPosition(300, 300);
     root->setOrigin(300, 300);
-    RotateAnimation::Unique animation = std::make_unique<RotateAnimation>(root);
-    animation->SetDurationMs(5000);
-    animation->Start();
+    AccelerateInterpolator::Unique interpolator = std::make_unique<AccelerateInterpolator>();
+
+    RotateAnimation::Unique animation = std::make_unique<RotateAnimation>(root, std::move(interpolator));
+    animation->SetDurationMs(10000);
+//    animation->Start();
     animation_driver.RegisterAnimation(std::move(animation));
+
+    LinearInterpolator::Unique linear_interpolator = std::make_unique<LinearInterpolator>();
+    PositionAnimation::Unique position_animation = std::make_unique<PositionAnimation>(root,
+                                                                                       std::move(linear_interpolator),
+                                                                                       sf::Vector2f{900, 900});
+    position_animation->SetDurationMs(10000);
+    animation_driver.RegisterAnimation(std::move(position_animation));
 
     sf::Clock clock{};
     sf::Event event{};

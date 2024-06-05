@@ -31,7 +31,7 @@ public: // API
     void RequestAnimationFrame(float dt);
 
 private:
-    std::unordered_map<Tag, Animation::Unique> pending_registry_{};
+    std::vector<Animation::Unique> pending_registry_{};
     AnimationDriverVisitor visitor_{};
 };
 

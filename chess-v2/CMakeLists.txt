@@ -66,6 +66,8 @@ add_executable(chess_v2 src/main.cpp src/model/board/Chessboard.cpp src/model/pi
         src/core/animation/RotateAnimation.h
         src/core/animation/AnimationDriverVisitor.cpp
         src/core/animation/AnimationDriverVisitor.h
+        src/core/animation/PositionAnimation.cpp
+        src/core/animation/PositionAnimation.h
 )
 
 target_include_directories(
